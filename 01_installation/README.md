@@ -1,6 +1,6 @@
 Official documentation from Parse Biosciences [here](https://support.parsebiosciences.com/hc/en-us/articles/23060102930580-Pipeline-Installation-Current-Version), login required.
 
-### create a conda environment for installation
+### 1a: create a conda environment for installation
 ```
 # requesting node to run conda
 qlogin -l h_vmem=20G
@@ -10,7 +10,7 @@ conda create -n spipe conda-forge::python==3.10
 #the command above will take a while
 ```
 
-### create directory structure, download parse pipeline, and install
+### 1b: create directory structure, download parse pipeline, and install
 ```
 conda activate spipe
 cd /exports/eddie/scratch/pdewari/
@@ -18,13 +18,16 @@ cd /exports/eddie/scratch/pdewari/
 mkdir newvolume
 cd newvolume/
 mkdir analysis expdata genomes
-wget -c https://support.parsebiosciences.com/hc/en-us/article_attachments/23931973337876
+```
+Download the latest Parse pipeline in zip format from [here](https://support.parsebiosciences.com/hc/en-us/articles/17200056667924-Pipeline-Download-Current-Version), login required.
+
+```
 unzip ParseBiosciences-Pipeline.1.2.0.zip
 cd ParseBiosciences-Pipeline.1.2.0/
 bash ./install_dependencies_conda.sh -i -y
 pip install --no-cache-dir ./
 ```
-### directory structure after the install
+### 1c: directory structure after the install
 ```
 tree -d
 ```
@@ -58,7 +61,7 @@ It should output something like as below
 23 directories
 
 ```
-### check if installed correctly
+### 1d: check if installed correctly
 ```
 split-pipe --help
 ```
