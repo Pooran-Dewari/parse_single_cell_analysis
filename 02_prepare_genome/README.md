@@ -24,7 +24,13 @@ do
  LINK=$(echo "$LINE" | awk '{print $3}')
  echo "downloading $LINK"
  wget -c http://ftp.ensemblgenomes.org/pub/metazoa/release-58/fasta/crassostrea_gigas/dna/$LINK
+ echo "unzipping $LINK"
+ echo "****************"
+ gunzip $LINK
 done < genome_files.txt
+
+cat *.fa > Crassostrea_gigas_uk_roslin_v1.dna_sm.primary_assembly.fa
+
 ```
 and batch download by running the script:    
 
