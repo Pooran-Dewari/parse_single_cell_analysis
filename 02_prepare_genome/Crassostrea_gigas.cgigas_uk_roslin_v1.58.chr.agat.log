@@ -1,0 +1,168 @@
+$ agat_convert_sp_gff2gtf.pl --gff Crassostrea_gigas.cgigas_uk_roslin_v1.58.chr.gff3 -o Crassostrea_gigas.cgigas_uk_roslin_v1.58.chr.gtf
+Using standard /exports/cmvm/eddie/eb/groups/macqueen_lab/Pooran/anaconda/envs/spipe/lib/perl5/site_perl/auto/share/dist/AGAT/agat_config.yaml file
+GTF version relax selected from the agat config file.
+Reading input file
+
+ ------------------------------------------------------------------------------
+|   Another GFF Analysis Toolkit (AGAT) - Version: v1.3.0                      |
+|   https://github.com/NBISweden/AGAT                                          |
+|   National Bioinformatics Infrastructure Sweden (NBIS) - www.nbis.se         |
+ ------------------------------------------------------------------------------
+
+
+                          ------ Start parsing ------
+-------------------------- parse options and metadata --------------------------
+=> Accessing the feature_levels YAML file
+Using standard /exports/cmvm/eddie/eb/groups/macqueen_lab/Pooran/anaconda/envs/spipe/lib/perl5/site_perl/auto/share/dist/AGAT/feature_levels.yaml file
+=> Attribute used to group features when no Parent/ID relationship exists (i.e common tag):
+        * locus_tag
+        * gene_id
+=> merge_loci option deactivated
+=> Machine information:
+        This script is being run by perl v5.32.1
+        Bioperl location being used: /exports/cmvm/eddie/eb/groups/macqueen_lab/Pooran/anaconda/envs/spipe/lib/perl5/site_perl/Bio/
+        Operating system being used: linux
+=> Accessing Ontology
+        No ontology accessible from the gff file header!
+        We use the SOFA ontology distributed with AGAT:
+                /exports/cmvm/eddie/eb/groups/macqueen_lab/Pooran/anaconda/envs/spipe/lib/perl5/site_perl/auto/share/dist/AGAT/so.obo
+        Read ontology /exports/cmvm/eddie/eb/groups/macqueen_lab/Pooran/anaconda/envs/spipe/lib/perl5/site_perl/auto/share/dist/AGAT/so.obo:
+                4 root terms, and 2596 total terms, and 1516 leaf terms
+        Filtering ontology:
+                We found 1861 terms that are sequence_feature or is_a child of it.
+--------------------------------- parsing file ---------------------------------
+=> Number of line in file: 1547563
+=> Number of comment lines: 33417
+=> Fasta included: No
+=> Number of features lines: 1514146
+=> Number of feature type (3rd column): 19
+        * Level1: 3 => ncRNA_gene region gene
+        * level2: 12 => RNase_MRP_RNA tRNA ncRNA lnc_RNA RNase_P_RNA snRNA SRP_RNA mRNA scRNA snoRNA pre_miRNA rRNA
+        * level3: 4 => CDS three_prime_UTR exon five_prime_UTR
+        * unknown: 0 =>
+=> Version of the Bioperl GFF parser selected by AGAT: 3
+                 ------ End parsing (done in 148 second) ------
+
+
+                           ------ Start checks ------
+---------------------------- Check1: feature types -----------------------------
+----------------------------------- ontology -----------------------------------
+INFO - Feature types not expected by the GFF3 specification:
+* lnc_rna
+The feature type (3rd column in GFF3) is constrained to be either a term from th
+e Sequence Ontology or an SO accession number. The latter alternative is disting
+uished using the syntax SO:000000. In either case, it must be sequence_feature (
+SO:0000110) or an is_a child of it.To follow rigorously the gff3 format, please
+visit this website:
+https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md
+------------------------------------- agat -------------------------------------
+AGAT can deal with all the encountered feature types (3rd column)
+------------------------------ done in 0 seconds -------------------------------
+
+------------------------------ Check2: duplicates ------------------------------
+None found
+------------------------------ done in 0 seconds -------------------------------
+
+-------------------------- Check3: sequential bucket ---------------------------
+None found
+------------------------------ done in 2 seconds -------------------------------
+
+--------------------------- Check4: l2 linked to l3 ----------------------------
+No problem found
+------------------------------ done in 0 seconds -------------------------------
+
+--------------------------- Check5: l1 linked to l2 ----------------------------
+No problem found
+------------------------------ done in 0 seconds -------------------------------
+
+--------------------------- Check6: remove orphan l1 ---------------------------
+We remove only those not supposed to be orphan
+None found
+------------------------------ done in 1 seconds -------------------------------
+
+------------------------- Check7: all level3 locations -------------------------
+------------------------------ done in 23 seconds ------------------------------
+
+------------------------------ Check8: check cds -------------------------------
+No problem found
+------------------------------ done in 0 seconds -------------------------------
+
+----------------------------- Check9: check exons ------------------------------
+No exons created
+No exons locations modified
+No supernumerary exons removed
+No level2 locations modified
+------------------------------ done in 16 seconds ------------------------------
+
+----------------------------- Check10: check utrs ------------------------------
+No UTRs created
+No UTRs locations modified
+No supernumerary UTRs removed
+------------------------------ done in 9 seconds -------------------------------
+
+------------------------ Check11: all level2 locations -------------------------
+No problem found
+------------------------------ done in 15 seconds ------------------------------
+
+------------------------ Check12: all level1 locations -------------------------
+No problem found
+------------------------------ done in 2 seconds -------------------------------
+
+---------------------- Check13: remove identical isoforms ----------------------
+Lets remove isoform transcript:G5603.2
+Lets remove isoform transcript:G12434.2
+Lets remove isoform transcript:G31647.3
+Lets remove isoform transcript:G785.2
+Lets remove isoform transcript:G12167.4
+Lets remove isoform transcript:G1266.3
+Lets remove isoform transcript:G18755.2
+Lets remove isoform transcript:G10343.5
+Lets remove isoform transcript:G17213.2
+Lets remove isoform transcript:G21244.3
+Lets remove isoform transcript:G7936.2
+Lets remove isoform transcript:G2100.3
+Lets remove isoform transcript:G5927.3
+Lets remove isoform transcript:G12461.3
+Lets remove isoform transcript:G17905.4
+Lets remove isoform transcript:G30767.2
+Lets remove isoform transcript:G2483.3
+Lets remove isoform transcript:G23853.2
+Lets remove isoform transcript:G10952.3
+Lets remove isoform transcript:G5680.8
+Lets remove isoform transcript:G16353.2
+Lets remove isoform transcript:G3419.2
+Lets remove isoform transcript:G16504.5
+Lets remove isoform transcript:G11966.2
+Lets remove isoform transcript:G26977.2
+Lets remove isoform transcript:G4609.4
+Lets remove isoform transcript:G22469.4
+Lets remove isoform transcript:G8621.3
+Lets remove isoform transcript:G399.2
+Lets remove isoform transcript:G13027.2
+Lets remove isoform transcript:G24058.4
+Lets remove isoform transcript:G25908.3
+Lets remove isoform transcript:G10199.4
+Lets remove isoform transcript:G29729.2
+Lets remove isoform transcript:G6579.3
+Lets remove isoform transcript:G1856.2
+Lets remove isoform transcript:G3937.6
+Lets remove isoform transcript:G16515.2
+Lets remove isoform transcript:G27854.4
+Lets remove isoform transcript:G31066.3
+Lets remove isoform transcript:G31669.3
+Lets remove isoform transcript:G16278.2
+Lets remove isoform transcript:G25425.2
+Lets remove isoform transcript:G23014.4
+Lets remove isoform transcript:G25003.7
+Lets remove isoform transcript:G25119.3
+Lets remove isoform transcript:G3169.3
+Lets remove isoform transcript:G7144.3
+Lets remove isoform transcript:G22790.3
+Lets remove isoform transcript:G7289.7
+50 identical isoforms removed
+------------------------------ done in 7 seconds -------------------------------
+                  ------ End checks (done in 75 second) ------
+
+
+converting to GTFrelax
+Formating output to GTFrelax
