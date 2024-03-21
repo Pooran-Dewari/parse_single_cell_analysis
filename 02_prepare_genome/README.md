@@ -36,8 +36,8 @@ cat *.fa > Crassostrea_gigas_uk_roslin_v1.dna_sm.primary_assembly.fa
 and batch download by running the script:    
 
 `. download_genome.sh`
-
-### Download gtf/gff3 file, convert to gtf
+***
+### Download gtf/gff3 file, convert to gtf if necessary
 Parse pipeline strictly requires a gtf gene annotation file, and would not work with gff3 format.  
 Only gff3 format is available for pacific oyster on [Ensembl](https://ftp.ensemblgenomes.ebi.ac.uk/pub/metazoa/release-58/gff3/crassostrea_gigas/), therefore, need to convert to gtf.  
 The [best tool](https://agat.readthedocs.io/en/latest/gff_to_gtf.html) for gff3 to gtf is AGAT, documentation and download instructions on [github](https://github.com/NBISweden/AGAT)  
@@ -56,6 +56,9 @@ cd /exports/eddie/scratch/pdewari/newvolume/genomes
 wget -c https://ftp.ensemblgenomes.ebi.ac.uk/pub/metazoa/release-58/gff3/crassostrea_gigas/Crassostrea_gigas.cgigas_uk_roslin_v1.58.chr.gff3.gz
 gunzip Crassostrea_gigas.cgigas_uk_roslin_v1.58.chr.gff3.gz
 ```
-
+Convert to gtf using agat
+```
+agat_convert_sp_gff2gtf.pl --gff Crassostrea_gigas.cgigas_uk_roslin_v1.58.chr.gff3 -o Crassostrea_gigas.cgigas_uk_roslin_v1.58.chr.gtf
+```
 
 
