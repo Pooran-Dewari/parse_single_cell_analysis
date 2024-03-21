@@ -1,0 +1,443 @@
+--------------------------------------------------------------------------------
+
+------------------------------------ region ------------------------------------
+Number of region                             11
+Number region overlapping                    0
+Total region length (bp)                     589377081
+mean region length (bp)                      53579734
+Longest region (bp)                          73550375
+Shortest region (bp)                         18224
+
+----------------------------------- lnc_rna ------------------------------------
+Number of ncrna_gene                         17
+Number of lnc_rna                            17
+Number of exon                               17
+Number ncrna_gene overlapping                0
+Number of single exon ncrna_gene             17
+Number of single exon lnc_rna                17
+mean lnc_rnas per ncrna_gene                 1.0
+mean exons per lnc_rna                       1.0
+Total ncrna_gene length (bp)                 1545
+Total lnc_rna length (bp)                    1545
+Total exon length (bp)                       1545
+mean ncrna_gene length (bp)                  90
+mean lnc_rna length (bp)                     90
+mean exon length (bp)                        90
+Longest ncrna_gene (bp)                      184
+Longest lnc_rna (bp)                         184
+Longest exon (bp)                            184
+Shortest ncrna_gene (bp)                     61
+Shortest lnc_rna (bp)                        61
+
+------------------------------------- mrna -------------------------------------
+Number of gene                               28180
+Number of mrna                               75666
+Number of mrnas with utr both sides          66850
+Number of mrnas with at least one utr        71490
+Number of cds                                75666
+Number of exon                               568351
+Number of five_prime_utr                     69019
+Number of three_prime_utr                    69321
+Number of exon in cds                        522568
+Number of exon in five_prime_utr             98092
+Number of exon in three_prime_utr            84950
+Number of intron in cds                      446902
+Number of intron in exon                     492685
+Number of intron in five_prime_utr           29073
+Number of intron in three_prime_utr          15629
+Number gene overlapping                      3901
+Number of single exon gene                   765
+Number of single exon mrna                   5026
+mean mrnas per gene                          2.7
+mean cdss per mrna                           1.0
+mean exons per mrna                          7.5
+mean five_prime_utrs per mrna                0.9
+mean three_prime_utrs per mrna               0.9
+mean exons per cds                           6.9
+mean exons per five_prime_utr                1.4
+mean exons per three_prime_utr               1.2
+mean introns in cdss per mrna                5.9
+mean introns in exons per mrna               6.5
+mean introns in five_prime_utrs per mrna     0.4
+mean introns in three_prime_utrs per mrna    0.2
+Total gene length (bp)                       399660379
+Total mrna length (bp)                       767617044
+Total cds length (bp)                        93948241
+Total exon length (bp)                       151500040
+Total five_prime_utr length (bp)             14695197
+Total three_prime_utr length (bp)            42856602
+Total intron length per cds (bp)             442643916
+Total intron length per exon (bp)            616117004
+Total intron length per five_prime_utr (bp)  101154943
+Total intron length per three_prime_utr (bp) 69264056
+mean gene length (bp)                        14182
+mean mrna length (bp)                        10144
+mean cds length (bp)                         1241
+mean exon length (bp)                        266
+mean five_prime_utr length (bp)              212
+mean three_prime_utr length (bp)             618
+mean cds piece length (bp)                   179
+mean five_prime_utr piece length (bp)        149
+mean three_prime_utr piece length (bp)       504
+mean intron in cds length (bp)               990
+mean intron in exon length (bp)              1250
+mean intron in five_prime_utr length (bp)    3479
+mean intron in three_prime_utr length (bp)   4431
+Longest gene (bp)                            1257016
+Longest mrna (bp)                            1257016
+Longest cds (bp)                             63882
+Longest exon (bp)                            11632
+Longest five_prime_utr (bp)                  30839
+Longest three_prime_utr (bp)                 14704
+Longest cds piece (bp)                       11632
+Longest five_prime_utr piece (bp)            9058
+Longest three_prime_utr piece (bp)           10277
+Longest intron into cds part (bp)            395230
+Longest intron into exon part (bp)           848947
+Longest intron into five_prime_utr part (bp) 773418
+Longest intron into three_prime_utr part (bp)848947
+Shortest gene (bp)                           120
+Shortest mrna (bp)                           120
+Shortest cds piece (bp)                      1
+Shortest five_prime_utr piece (bp)           1
+Shortest three_prime_utr piece (bp)          1
+Shortest intron into cds part (bp)           36
+Shortest intron into exon part (bp)          21
+Shortest intron into five_prime_utr part (bp)21
+Shortest intron into three_prime_utr part (bp)21
+
+mrna have isoforms! Here are the statistics without isoforms shortest isoforms excluded):
+
+Number of gene                               28180
+Number of mrna                               28180
+Number of mrnas with utr both sides          21356
+Number of mrnas with at least one utr        25450
+Number of cds                                28180
+Number of exon                               253280
+Number of five_prime_utr                     23288
+Number of three_prime_utr                    23518
+Number of exon in cds                        233060
+Number of exon in five_prime_utr             35389
+Number of exon in three_prime_utr            31519
+Number of intron in cds                      204880
+Number of intron in exon                     225100
+Number of intron in five_prime_utr           12101
+Number of intron in three_prime_utr          8001
+Number gene overlapping                      3328
+Number of single exon gene                   910
+Number of single exon mrna                   910
+mean mrnas per gene                          1.0
+mean cdss per mrna                           1.0
+mean exons per mrna                          9.0
+mean five_prime_utrs per mrna                0.8
+mean three_prime_utrs per mrna               0.8
+mean exons per cds                           8.3
+mean exons per five_prime_utr                1.5
+mean exons per three_prime_utr               1.3
+mean introns in cdss per mrna                7.3
+mean introns in exons per mrna               8.0
+mean introns in five_prime_utrs per mrna     0.4
+mean introns in three_prime_utrs per mrna    0.3
+Total gene length (bp)                       399660379
+Total mrna length (bp)                       353924708
+Total cds length (bp)                        42369796
+Total exon length (bp)                       65746627
+Total five_prime_utr length (bp)             6910336
+Total three_prime_utr length (bp)            16466495
+Total intron length per cds (bp)             194835773
+Total intron length per exon (bp)            288178081
+Total intron length per five_prime_utr (bp)  50352542
+Total intron length per three_prime_utr (bp) 42574667
+mean gene length (bp)                        14182
+mean mrna length (bp)                        12559
+mean cds length (bp)                         1503
+mean exon length (bp)                        259
+mean five_prime_utr length (bp)              296
+mean three_prime_utr length (bp)             700
+mean cds piece length (bp)                   181
+mean five_prime_utr piece length (bp)        195
+mean three_prime_utr piece length (bp)       522
+mean intron in cds length (bp)               950
+mean intron in exon length (bp)              1280
+mean intron in five_prime_utr length (bp)    4161
+mean intron in three_prime_utr length (bp)   5321
+Longest gene (bp)                            1257016
+Longest mrna (bp)                            1257016
+Longest cds (bp)                             63882
+Longest exon (bp)                            11632
+Longest five_prime_utr (bp)                  30839
+Longest three_prime_utr (bp)                 14704
+Longest cds piece (bp)                       11632
+Longest five_prime_utr piece (bp)            9058
+Longest three_prime_utr piece (bp)           10277
+Longest intron into cds part (bp)            395230
+Longest intron into exon part (bp)           848947
+Longest intron into five_prime_utr part (bp) 773418
+Longest intron into three_prime_utr part (bp)848947
+Shortest gene (bp)                           120
+Shortest mrna (bp)                           120
+Shortest cds piece (bp)                      1
+Shortest five_prime_utr piece (bp)           1
+Shortest three_prime_utr piece (bp)          1
+Shortest intron into cds part (bp)           41
+Shortest intron into exon part (bp)          21
+Shortest intron into five_prime_utr part (bp)21
+Shortest intron into three_prime_utr part (bp)21
+
+------------------------------------ ncrna -------------------------------------
+Number of gene                               8092
+Number of ncrna_gene                         4660
+Number of ncrna                              28994
+Number of exon                               100186
+Number of intron in exon                     71192
+Number ncrna_gene..gene overlapping          747
+Number of single exon gene                   2653
+Number of single exon ncrna_gene             2766
+Number of single exon ncrna                  15122
+mean ncrnas per gene                         3.6
+mean ncrnas per ncrna_gene                   6.2
+mean exons per ncrna                         3.5
+mean introns in exons per ncrna              2.5
+Total gene length (bp)                       146180294
+Total ncrna_gene length (bp)                 21992307
+Total ncrna length (bp)                      136114033
+Total exon length (bp)                       36661499
+Total intron length per exon (bp)            99452534
+mean gene length (bp)                        18064
+mean ncrna_gene length (bp)                  4719
+mean ncrna length (bp)                       4694
+mean exon length (bp)                        365
+mean intron in exon length (bp)              1396
+Longest gene (bp)                            700592
+Longest ncrna_gene (bp)                      441505
+Longest ncrna (bp)                           441505
+Longest exon (bp)                            6941
+Longest intron into exon part (bp)           432784
+Shortest gene (bp)                           621
+Shortest ncrna_gene (bp)                     139
+Shortest ncrna (bp)                          88
+Shortest intron into exon part (bp)          32
+
+ncrna have isoforms! Here are the statistics without isoforms shortest isoforms excluded):
+
+Number of gene                               8092
+Number of ncrna_gene                         4660
+Number of ncrna                              12752
+Number of exon                               50842
+Number of intron in exon                     38090
+Number ncrna_gene..gene overlapping          599
+Number of single exon gene                   2902
+Number of single exon ncrna_gene             2845
+Number of single exon ncrna                  5747
+mean ncrnas per gene                         1.6
+mean ncrnas per ncrna_gene                   2.7
+mean exons per ncrna                         4.0
+mean introns in exons per ncrna              3.0
+Total gene length (bp)                       146180294
+Total ncrna_gene length (bp)                 21992307
+Total ncrna length (bp)                      70890124
+Total exon length (bp)                       18761973
+Total intron length per exon (bp)            52128151
+mean gene length (bp)                        18064
+mean ncrna_gene length (bp)                  4719
+mean ncrna length (bp)                       5559
+mean exon length (bp)                        369
+mean intron in exon length (bp)              1368
+Longest gene (bp)                            700592
+Longest ncrna_gene (bp)                      441505
+Longest ncrna (bp)                           441505
+Longest exon (bp)                            6941
+Longest intron into exon part (bp)           432784
+Shortest gene (bp)                           621
+Shortest ncrna_gene (bp)                     139
+Shortest ncrna (bp)                          88
+Shortest intron into exon part (bp)          32
+
+---------------------------------- pre_mirna -----------------------------------
+Number of ncrna_gene                         40
+Number of pre_mirna                          40
+Number of exon                               40
+Number ncrna_gene overlapping                0
+Number of single exon ncrna_gene             40
+Number of single exon pre_mirna              40
+mean pre_mirnas per ncrna_gene               1.0
+mean exons per pre_mirna                     1.0
+Total ncrna_gene length (bp)                 3218
+Total pre_mirna length (bp)                  3218
+Total exon length (bp)                       3218
+mean ncrna_gene length (bp)                  80
+mean pre_mirna length (bp)                   80
+mean exon length (bp)                        80
+Longest ncrna_gene (bp)                      117
+Longest pre_mirna (bp)                       117
+Longest exon (bp)                            117
+Shortest ncrna_gene (bp)                     54
+Shortest pre_mirna (bp)                      54
+
+-------------------------------- rnase_mrp_rna ---------------------------------
+Number of ncrna_gene                         1
+Number of rnase_mrp_rna                      1
+Number of exon                               1
+Number ncrna_gene overlapping                0
+Number of single exon ncrna_gene             1
+Number of single exon rnase_mrp_rna          1
+mean rnase_mrp_rnas per ncrna_gene           1.0
+mean exons per rnase_mrp_rna                 1.0
+Total ncrna_gene length (bp)                 251
+Total rnase_mrp_rna length (bp)              251
+Total exon length (bp)                       251
+mean ncrna_gene length (bp)                  251
+mean rnase_mrp_rna length (bp)               251
+mean exon length (bp)                        251
+Longest ncrna_gene (bp)                      251
+Longest rnase_mrp_rna (bp)                   251
+Longest exon (bp)                            251
+Shortest ncrna_gene (bp)                     251
+Shortest rnase_mrp_rna (bp)                  251
+
+--------------------------------- rnase_p_rna ----------------------------------
+Number of ncrna_gene                         1
+Number of rnase_p_rna                        1
+Number of exon                               1
+Number ncrna_gene overlapping                0
+Number of single exon ncrna_gene             1
+Number of single exon rnase_p_rna            1
+mean rnase_p_rnas per ncrna_gene             1.0
+mean exons per rnase_p_rna                   1.0
+Total ncrna_gene length (bp)                 283
+Total rnase_p_rna length (bp)                283
+Total exon length (bp)                       283
+mean ncrna_gene length (bp)                  283
+mean rnase_p_rna length (bp)                 283
+mean exon length (bp)                        283
+Longest ncrna_gene (bp)                      283
+Longest rnase_p_rna (bp)                     283
+Longest exon (bp)                            283
+Shortest ncrna_gene (bp)                     283
+Shortest rnase_p_rna (bp)                    283
+
+------------------------------------- rrna -------------------------------------
+Number of ncrna_gene                         70
+Number of rrna                               70
+Number of exon                               70
+Number ncrna_gene overlapping                0
+Number of single exon ncrna_gene             70
+Number of single exon rrna                   70
+mean rrnas per ncrna_gene                    1.0
+mean exons per rrna                          1.0
+Total ncrna_gene length (bp)                 16665
+Total rrna length (bp)                       16665
+Total exon length (bp)                       16665
+mean ncrna_gene length (bp)                  238
+mean rrna length (bp)                        238
+mean exon length (bp)                        238
+Longest ncrna_gene (bp)                      1821
+Longest rrna (bp)                            1821
+Longest exon (bp)                            1821
+Shortest ncrna_gene (bp)                     51
+Shortest rrna (bp)                           51
+
+------------------------------------ scrna -------------------------------------
+Number of ncrna_gene                         1
+Number of scrna                              1
+Number of exon                               1
+Number ncrna_gene overlapping                0
+Number of single exon ncrna_gene             1
+Number of single exon scrna                  1
+mean scrnas per ncrna_gene                   1.0
+mean exons per scrna                         1.0
+Total ncrna_gene length (bp)                 129
+Total scrna length (bp)                      129
+Total exon length (bp)                       129
+mean ncrna_gene length (bp)                  129
+mean scrna length (bp)                       129
+mean exon length (bp)                        129
+Longest ncrna_gene (bp)                      129
+Longest scrna (bp)                           129
+Longest exon (bp)                            129
+Shortest ncrna_gene (bp)                     129
+Shortest scrna (bp)                          129
+
+------------------------------------ snorna ------------------------------------
+Number of ncrna_gene                         14
+Number of snorna                             14
+Number of exon                               14
+Number ncrna_gene overlapping                0
+Number of single exon ncrna_gene             14
+Number of single exon snorna                 14
+mean snornas per ncrna_gene                  1.0
+mean exons per snorna                        1.0
+Total ncrna_gene length (bp)                 2537
+Total snorna length (bp)                     2537
+Total exon length (bp)                       2537
+mean ncrna_gene length (bp)                  181
+mean snorna length (bp)                      181
+mean exon length (bp)                        181
+Longest ncrna_gene (bp)                      245
+Longest snorna (bp)                          245
+Longest exon (bp)                            245
+Shortest ncrna_gene (bp)                     79
+Shortest snorna (bp)                         79
+
+------------------------------------ snrna -------------------------------------
+Number of ncrna_gene                         98
+Number of snrna                              98
+Number of exon                               98
+Number ncrna_gene overlapping                0
+Number of single exon ncrna_gene             98
+Number of single exon snrna                  98
+mean snrnas per ncrna_gene                   1.0
+mean exons per snrna                         1.0
+Total ncrna_gene length (bp)                 14828
+Total snrna length (bp)                      14828
+Total exon length (bp)                       14828
+mean ncrna_gene length (bp)                  151
+mean snrna length (bp)                       151
+mean exon length (bp)                        151
+Longest ncrna_gene (bp)                      193
+Longest snrna (bp)                           193
+Longest exon (bp)                            193
+Shortest ncrna_gene (bp)                     109
+Shortest snrna (bp)                          109
+
+----------------------------------- srp_rna ------------------------------------
+Number of ncrna_gene                         4
+Number of srp_rna                            4
+Number of exon                               4
+Number ncrna_gene overlapping                0
+Number of single exon ncrna_gene             4
+Number of single exon srp_rna                4
+mean srp_rnas per ncrna_gene                 1.0
+mean exons per srp_rna                       1.0
+Total ncrna_gene length (bp)                 1157
+Total srp_rna length (bp)                    1157
+Total exon length (bp)                       1157
+mean ncrna_gene length (bp)                  289
+mean srp_rna length (bp)                     289
+mean exon length (bp)                        289
+Longest ncrna_gene (bp)                      301
+Longest srp_rna (bp)                         301
+Longest exon (bp)                            301
+Shortest ncrna_gene (bp)                     260
+Shortest srp_rna (bp)                        260
+
+------------------------------------- trna -------------------------------------
+Number of ncrna_gene                         304
+Number of trna                               304
+Number of exon                               304
+Number ncrna_gene overlapping                1
+Number of single exon ncrna_gene             304
+Number of single exon trna                   304
+mean trnas per ncrna_gene                    1.0
+mean exons per trna                          1.0
+Total ncrna_gene length (bp)                 22878
+Total trna length (bp)                       22878
+Total exon length (bp)                       22878
+mean ncrna_gene length (bp)                  75
+mean trna length (bp)                        75
+mean exon length (bp)                        75
+Longest ncrna_gene (bp)                      111
+Longest trna (bp)                            111
+Longest exon (bp)                            111
+Shortest ncrna_gene (bp)                     65
+Shortest trna (bp)                           65
