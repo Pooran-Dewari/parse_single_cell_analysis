@@ -60,5 +60,8 @@ Convert to gtf using agat
 ```
 agat_convert_sp_gff2gtf.pl --gff Crassostrea_gigas.cgigas_uk_roslin_v1.58.chr.gff3 -o Crassostrea_gigas.cgigas_uk_roslin_v1.58.chr.gtf
 ```
-
-
+The log file `Crassostrea_gigas.cgigas_uk_roslin_v1.58.chr.agat.log` is attached.  
+We can get a summary of gtf file using agat.  
+```
+agat_sp_statistics.pl --gff Crassostrea_gigas.cgigas_uk_roslin_v1.58.chr.gtf   -o gtf-stats-summary
+```
