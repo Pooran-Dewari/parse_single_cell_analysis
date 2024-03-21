@@ -75,6 +75,7 @@ sed -i 's/\bbiotype\b/gene_biotype/g' Crassostrea_gigas_uk_roslin_v1.gtf
 ****
 
 ### index the genome
+
 ```
 split-pipe \
 --mode mkref \
@@ -83,4 +84,4 @@ split-pipe \
 --genes /exports/eddie/scratch/pdewari/newvolume/genomes/Crassostrea_gigas_uk_roslin_v1.gtf \
 --output_dir /exports/eddie/scratch/pdewari/newvolume/genomes/cgigas
 ```
-Log file attached
+Log file ` index_genome_mkref.log` attached
