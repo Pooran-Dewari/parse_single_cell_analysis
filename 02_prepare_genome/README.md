@@ -58,10 +58,29 @@ gunzip Crassostrea_gigas.cgigas_uk_roslin_v1.58.chr.gff3.gz
 ```
 Convert to gtf using agat
 ```
-agat_convert_sp_gff2gtf.pl --gff Crassostrea_gigas.cgigas_uk_roslin_v1.58.chr.gff3 -o Crassostrea_gigas.cgigas_uk_roslin_v1.58.chr.gtf
+agat_convert_sp_gff2gtf.pl --gff Crassostrea_gigas.cgigas_uk_roslin_v1.58.chr.gff3 -o Crassostrea_gigas_uk_roslin_v1.gtf
 ```
 The log file `Crassostrea_gigas.cgigas_uk_roslin_v1.58.chr.agat.log` is attached.  
 We can get a summary of gtf file using agat.  
 ```
-agat_sp_statistics.pl --gff Crassostrea_gigas.cgigas_uk_roslin_v1.58.chr.gtf   -o gtf-stats-summary
+agat_sp_statistics.pl --gff Crassostrea_gigas_uk_roslin_v1.gtf   -o gtf-stats-summary
 ```
+Before using the gtf file further, must check that it complies with the [requirements](https://support.parsebiosciences.com/hc/en-us/articles/11606689895828-GTF-Formatting-Guidelines), login required to access the page.  
+
+I can see that the column 9 of my gtf has 'biotype' rather than 'gene_biotype'. need to replace it using sed, see below 
+
+```
+sed -i 's/\bbiotype\b/gene_biotype/g' Crassostrea_gigas_uk_roslin_v1.gtf
+```
+****
+
+### index the genome
+```
+split-pipe \
+--mode mkref \
+--genome_name cgigas \
+--fasta /exports/eddie/scratch/pdewari/newvolume/genomes/Crassostrea_gigas_uk_roslin_v1.dna_sm.primary_assembly.fa \
+--genes /exports/eddie/scratch/pdewari/newvolume/genomes/Crassostrea_gigas_uk_roslin_v1.gtf \
+--output_dir /exports/eddie/scratch/pdewari/newvolume/genomes/cgigas
+```
+Log file attached
