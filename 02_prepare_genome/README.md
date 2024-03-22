@@ -85,3 +85,13 @@ split-pipe \
 --output_dir /exports/eddie/scratch/pdewari/newvolume/genomes/cgigas
 ```
 Log file ` index_genome_mkref.log` attached
+
+***
+
+### concatenate fastq files sequenced on different lanes, do this for each sublibrary separately
+note: "If you have fastq files from multiple lanes they must be concatenated, but sublibraries should always remain separate".  
+```
+# for sublibrary A1
+cat A1_EKDL240002473-1A_223M7CLT4_L7_1.fq.gz A1_EKDL240002473-1A_223M7CLT4_L8_1.fq.gz > A1_EKDL240002473-1A_223M7CLT4_cat_1.fq.gz
+cat A1_EKDL240002473-1A_223M7CLT4_L7_2.fq.gz A1_EKDL240002473-1A_223M7CLT4_L8_2.fq.gz > A1_EKDL240002473-1A_223M7CLT4_cat_2.fq.gz
+```
