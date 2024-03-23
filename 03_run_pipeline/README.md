@@ -15,3 +15,12 @@ CPU/threads:
 - 500M-1B  reads = 24-32 threads
 
 We have 8 sublibraries; each with 1,600M reads after concatenation, so would need aprox 400GB memory & 44 threads
+
+
+```
+cd /exports/eddie/scratch/pdewari/newvolume/
+
+screen -S spipe
+
+
+```
