@@ -1,0 +1,20 @@
+number_of_reads 706205225
+reads_too_short 0
+reads_valid_bc  655887939
+reads_ambig_bc1 348178
+bc1_Q30 0.749
+bc2_Q30 0.742
+bc3_Q30 0.951
+bc_edit_dist_NA 50317286
+bc_edit_dist_0  522694991
+bc_edit_dist_1  49123934
+bc_edit_dist_2  84069014
+index_with_outs 633651030
+index_mult_outs 26215441
+index_no_outs   22236909
+total_outputs   659866471
+
+New files: /exports/eddie/scratch/pdewari/newvolume/A1/split-fq/A1_EKDL240002473-1A_223M7CLT4_cat_1_group_shrimp_R1.fastq.gz  (and R2)  295197926
+New files: /exports/eddie/scratch/pdewari/newvolume/A1/split-fq/A1_EKDL240002473-1A_223M7CLT4_cat_1_group_human_R1.fastq.gz  (and R2)  364668545
+
+Total time 7:29:17.00
