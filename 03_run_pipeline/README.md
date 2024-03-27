@@ -49,7 +49,7 @@ split-pipe \
     --genome_dir /exports/eddie/scratch/pdewari/newvolume/genomes/cgigas/ \
     --fq1 /exports/eddie/scratch/pdewari/newvolume/A1/split-fq/A1_EKDL240002473-1A_223M7CLT4_cat_1_group_human_R1.fastq.gz \
     --fq2 /exports/eddie/scratch/pdewari/newvolume/A1/split-fq/A1_EKDL240002473-1A_223M7CLT4_cat_1_group_human_R2.fastq.gz \
-    --output_dir /exports/eddie/scratch/pdewari/newvolume/analysis/A1_results \
+    --output_dir /exports/cmvm/eddie/eb/groups/bean_grp/Pooran/parse/analysis/a1_results \
     --sample Ambre1 C9-C10 \
     --sample Ambre2 C11-C12 \
     --sample Ambre3 D1-D2 \
