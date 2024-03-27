@@ -20,12 +20,8 @@ CPU/threads:
 
 After fastq splitting, we have approx 400M paired-reads in each sublibrary; would need aprox 300GB memory & 18 threads  
 
-Generate parameter file & add `--parfile parfile.txt` paramter when running the pipeline.  
-```
-echo "post_min_map_frac 0.01" > parfile.txt
-```
-
-*Note: adding the parameter ` --kit_score_skip` to ignore warning about low-score detection of the kit.*  
+*Note: adding the parameter ` --kit_score_skip` to ignore warning about low-score detection of the kit.
+Also, don't need `--parfile parfile.txt` as we have already split the fastq files by species.*  
 
 Submit the job using qsub (copy the code below into a .sh file and submit the job on cluster)  
 
@@ -50,7 +46,6 @@ split-pipe \
     --chemistry v2 \
     --kit WT_mega \
     --kit_score_skip \
-    --parfile parfile.txt \
     --genome_dir /exports/eddie/scratch/pdewari/newvolume/genomes/cgigas/ \
     --fq1 /exports/eddie/scratch/pdewari/newvolume/A1/split-fq/A1_EKDL240002473-1A_223M7CLT4_cat_1_group_human_R1.fastq.gz \
     --fq2 /exports/eddie/scratch/pdewari/newvolume/A1/split-fq/A1_EKDL240002473-1A_223M7CLT4_cat_1_group_human_R2.fastq.gz \
