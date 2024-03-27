@@ -25,6 +25,8 @@ Generate parameter file & add `--parfile parfile.txt` paramter when running the 
 echo "post_min_map_frac 0.01" > parfile.txt
 ```
 
+*Note: adding the parameter ` --kit_score_skip` to ignore warning about low-score detection of the kit.*  
+
 Submit the job using qsub (copy the code below into a .sh file and submit the job on cluster)  
 
 ```
@@ -33,7 +35,6 @@ Submit the job using qsub (copy the code below into a .sh file and submit the jo
 #$ -l h_rt=24:10:00 ###HH:MM:SS
 #$ -l h_vmem=20G
 #$ -pe sharedmem 18
-#$ -P roslin_macqueen_lab
 
 module load anaconda/2024.02
 
@@ -47,10 +48,13 @@ conda activate spipe
 split-pipe \
     --mode all \
     --chemistry v2 \
+    --kit WT_mega \
+    --kit_score_skip \
+    --parfile parfile.txt \
     --genome_dir /exports/eddie/scratch/pdewari/newvolume/genomes/cgigas/ \
     --fq1 /exports/eddie/scratch/pdewari/newvolume/A1/split-fq/A1_EKDL240002473-1A_223M7CLT4_cat_1_group_human_R1.fastq.gz \
     --fq2 /exports/eddie/scratch/pdewari/newvolume/A1/split-fq/A1_EKDL240002473-1A_223M7CLT4_cat_1_group_human_R2.fastq.gz \
-    --output_dir /exports/cmvm/eddie/eb/groups/bean_grp/Pooran/parse/analysis/A1_results \
+    --output_dir /exports/eddie/scratch/pdewari/newvolume/analysis/A1_results \
     --sample Ambre1 C9-C10 \
     --sample Ambre2 C11-C12 \
     --sample Ambre3 D1-D2 \
@@ -59,4 +63,5 @@ split-pipe \
     --sample Ambre6 D7-D8 \
     --sample Ambre7 D9-D10 \
     --sample Ambre8 D11-D12
+
 ```
