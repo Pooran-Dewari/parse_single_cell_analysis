@@ -41,5 +41,5 @@ python $SCRIPTPATH \
 --fq2 ${FQ_DIR}A1_EKDL240002473-1A_223M7CLT4_cat_2.fq.gz \
 --opath ${FQ_DIR}split-fq \
 --group shrimp A1-C8 \
---group human C9-D12
+--group oyster C9-D12
 ```
