@@ -20,10 +20,9 @@ CPU/threads:
 
 After fastq splitting, we have approx 400M paired-reads in each sublibrary; would need aprox 300GB memory & 18 threads  
 
+Generate parameter file & add `--parfile parfile.txt` paramter when running the pipeline.  
 ```
-screen -S spipe_A1
-
-cd /exports/eddie/scratch/pdewari/newvolume/
+echo "post_min_map_frac 0.01" > parfile.txt
 ```
 
 Submit the job using qsub (copy the code below into a .sh file and submit the job on cluster)  
