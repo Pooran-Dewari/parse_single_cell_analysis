@@ -1,5 +1,6 @@
 ### This is just the log for myself.
 
+#### combine fastq
 ```
  rsync -rPl /exports/cmvm/datastore/eb/groups/bean_grp/Pooran/parse_ambre/raw_data/X204SC24021433-Z01-F001/01.RawData/A2 ./
 
@@ -7,6 +8,8 @@
 cat A2_EKDL240002474-1A_223M7CLT4_L7_1.fq.gz A2_EKDL240002474-1A_223M7CLT4_L8_1.fq.gz > A2_EKDL240002474-1A_223M7CLT4_1.fq.gz
 cat A2_EKDL240002474-1A_223M7CLT4_L7_2.fq.gz A2_EKDL240002474-1A_223M7CLT4_L8_2.fq.gz > A2_EKDL240002474-1A_223M7CLT4_2.fq.gz
 ```
+
+#### split fastq by species
 ```
 #$ -V -cwd
 #$ -l h_rt=20:10:00 ###HH:MM:SS
