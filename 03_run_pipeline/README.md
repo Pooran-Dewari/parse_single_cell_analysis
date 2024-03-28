@@ -60,3 +60,5 @@ split-pipe \
     --sample Ambre8 D11-D12
 
 ```
+
+### Run completed in 7 hours!!
