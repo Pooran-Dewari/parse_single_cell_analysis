@@ -1,3 +1,5 @@
+# Prepare genome files for the oyser analysis (Ambre)
+
 ### Download the soft-masked genome
 Downloading the soft-masked genome for each chromosome from [Ensmebl](http://ftp.ensemblgenomes.org/pub/metazoa/release-58/fasta/crassostrea_gigas/dna/)  
 
