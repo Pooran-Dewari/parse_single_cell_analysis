@@ -105,5 +105,8 @@ qlogin -l h_vmem=20G
 module load anaconda/2024.02
 conda activate chipseq
 conda install -c conda-forge ncbi-datasets-cli
+#download genome file
 datasets download genome accession GCA_033589295.1 --include gff3,rna,cds,protein,genome,seq-report
+#download gff3 file from Alex email and scp to server
+scp Prawn_ctg.FINAL.fasta.gff3.clean.fTE0.5.filter.gff <eddie location ..scratch/pdewari/newvolume/shrimp_genome >
 ```
