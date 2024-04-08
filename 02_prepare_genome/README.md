@@ -95,3 +95,18 @@ note: "If you have fastq files from multiple lanes they must be concatenated, bu
 cat A1_EKDL240002473-1A_223M7CLT4_L7_1.fq.gz A1_EKDL240002473-1A_223M7CLT4_L8_1.fq.gz > A1_EKDL240002473-1A_223M7CLT4_cat_1.fq.gz
 cat A1_EKDL240002473-1A_223M7CLT4_L7_2.fq.gz A1_EKDL240002473-1A_223M7CLT4_L8_2.fq.gz > A1_EKDL240002473-1A_223M7CLT4_cat_2.fq.gz
 ```
+
+***
+
+# Prepare genome files for shrimp anlysis (Alex)
+
+
+# Prepare genome files for the shrimp analysis (Alex)
+
+```
+qlogin -l h_vmem=20G
+module load anaconda/2024.02
+conda activate chipseq
+conda install -c conda-forge ncbi-datasets-cli
+datasets download genome accession GCA_033589295.1 --include gff3,rna,cds,protein,genome,seq-report
+```
