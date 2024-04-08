@@ -140,4 +140,6 @@ Attribute 'gene_biotype': 0
 Attribute 'gene_type': 0  
 Guessed flavor: ???; Not Ensembl or Gencode  
 
+### try Mexican genome for the shrimp
+Download fasta files from [here](https://www.ncbi.nlm.nih.gov/Traces/wgs/DAWKWD01?display=download)
 
