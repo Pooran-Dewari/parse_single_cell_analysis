@@ -102,6 +102,7 @@ cat A1_EKDL240002473-1A_223M7CLT4_L7_2.fq.gz A1_EKDL240002473-1A_223M7CLT4_L8_2.
 
 # Prepare genome files for the shrimp analysis (Alex)
 
+#### download files
 ```
 qlogin -l h_vmem=20G
 module load anaconda/2024.02
@@ -111,4 +112,10 @@ conda install -c conda-forge ncbi-datasets-cli
 datasets download genome accession GCA_033589295.1 --include gff3,rna,cds,protein,genome,seq-report
 #download gff3 file from Alex email and scp to server
 scp Prawn_ctg.FINAL.fasta.gff3.clean.fTE0.5.filter.gff <eddie location ..scratch/pdewari/newvolume/shrimp_genome >
+```
+#### convert gff to gtf using agat
+```
+conda activate spipe
+agat_convert_sp_gff2gtf.pl --gff Prawn_ctg.FINAL.fasta.gff3.clean.fTE0.5.filter.gff -o GCA_033589295.1_ASM3358929v1.gtf
+
 ```
