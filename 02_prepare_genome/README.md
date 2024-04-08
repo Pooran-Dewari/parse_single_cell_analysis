@@ -119,3 +119,25 @@ conda activate spipe
 agat_convert_sp_gff2gtf.pl --gff Prawn_ctg.FINAL.fasta.gff3.clean.fTE0.5.filter.gff -o GCA_033589295.1_ASM3358929v1.gtf
 
 ```
+
+#### make ref genome using spipe
+```
+split-pipe \
+--mode mkref \
+--genome_name pvannamei \
+--fasta /exports/eddie/scratch/pdewari/newvolume/shrimp_genome/GCA_033589295.1_ASM3358929v1.genomic.fna \
+--genes /exports/eddie/scratch/pdewari/newvolume/shrimp_genome/GCA_033589295.1_ASM3358929v1.gtf \
+--output_dir /exports/eddie/scratch/pdewari/newvolume/genomes/pvannamei
+```
+error: Problem: Function make_gtf_annotations, file /exports/cmvm/eddie/eb/groups/macqueen_lab/Pooran/anaconda/envs/spipe/lib/python3.10/site-packages/splitpipe/mkref.py line 510  
+Problem: Unable to process gtf /exports/eddie/scratch/pdewari/newvolume/shrimp_genome/GCA_033589295.1_ASM3358929v1.gtf  
+Problem: Function make_gtf_annotations, file /exports/cmvm/eddie/eb/groups/macqueen_lab/Pooran/anaconda/envs/spipe/lib/python3.10/site-packages/splitpipe/mkref.py line 511  
+Problem:   (Min value to count 1)  
+Feature   'gene': 22428  
+Feature   'exon': 132911  
+Feature   'CDS': 131436  
+Attribute 'gene_biotype': 0  
+Attribute 'gene_type': 0  
+Guessed flavor: ???; Not Ensembl or Gencode  
+
+
