@@ -98,9 +98,6 @@ cat A1_EKDL240002473-1A_223M7CLT4_L7_2.fq.gz A1_EKDL240002473-1A_223M7CLT4_L8_2.
 
 ***
 
-# Prepare genome files for shrimp anlysis (Alex)
-
-
 # Prepare genome files for the shrimp analysis (Alex)
 
 ```
