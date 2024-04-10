@@ -1,10 +1,13 @@
-# 1- cat fastq files
+Repeating analysis for A1 sublibrary to rectify sample names (oyster, shrimp), had previously named human, shrimp.  
+Nothing changes in terms of results, just the naming used is correct.  
+
+## 1- cat fastq files
 ```
 cat A1_EKDL240002473-1A_223M7CLT4_L7_1.fq.gz A1_EKDL240002473-1A_223M7CLT4_L8_1.fq.gz > A1_EKDL240002473-1A_223M7CLT4_1.fq.gz
 cat A1_EKDL240002473-1A_223M7CLT4_L7_2.fq.gz A1_EKDL240002473-1A_223M7CLT4_L8_2.fq.gz > A1_EKDL240002473-1A_223M7CLT4_2.fq.gz
 ```
 
-# 2- split fastq by species
+## 2- split fastq by species
 ```
 #$ -V -cwd
 #$ -l h_rt=20:10:00 ###HH:MM:SS
@@ -25,7 +28,7 @@ python $SCRIPTPATH \
 --group oyster C9-D12
 ```
 
-# 3-  run parse
+## 3-  run parse
 ```
 #$ -V -cwd
 #$ -l h_rt=10:10:00 ###HH:MM:SS
