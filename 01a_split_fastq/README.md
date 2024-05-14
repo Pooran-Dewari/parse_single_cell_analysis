@@ -4,8 +4,6 @@ If you have multi-species reads in the same lane, there are two ways to go forwa
 
 I am going ahead with the **option 1** above, this will make sure that we do not lose reads that would have otherwise aligned to multiple loci with a mixed-species reference genome.  
 
-The python script to split fastq files by species (or groups) is available [here](https://www.dropbox.com/scl/fi/5d8zx5xjnumk2q2zvau0g/fastq_sep_groups.py?rlkey=wc58rop4yl5lmzudic3djagkw&dl=0)  
-
 ### concatenate fastq files sequenced on different lanes, do this for each sublibrary separately
 It's a good idea to combine reads if a sample was sequenced on multiple lanes, and then do the splitting by groups/species.  
 *"If you have fastq files from multiple lanes they must be concatenated, but sublibraries should always remain separate".*  
@@ -15,7 +13,8 @@ cat A1_EKDL240002473-1A_223M7CLT4_L7_1.fq.gz A1_EKDL240002473-1A_223M7CLT4_L8_1.
 cat A1_EKDL240002473-1A_223M7CLT4_L7_2.fq.gz A1_EKDL240002473-1A_223M7CLT4_L8_2.fq.gz > A1_EKDL240002473-1A_223M7CLT4_cat_2.fq.gz
 ```
 
-### split fastq files by species/groups
+### split fastq files by species/groups  
+
 #### New script: updated May 2024, dowload link for the python script [here](https://www.dropbox.com/scl/fi/z8u9cj4rngoqd9087b5xp/fastq_sep_groups.py?rlkey=ah2v8p1qqz4ji21uazecee58o&e=1&st=clpvhb6q&dl=0)  
 Here's an example of how to run the script. Make sure to update the file paths, sample information and fastq file names before you run the script. For more info, check the 'Description' section of the python script.  
 
