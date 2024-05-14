@@ -16,6 +16,22 @@ cat A1_EKDL240002473-1A_223M7CLT4_L7_2.fq.gz A1_EKDL240002473-1A_223M7CLT4_L8_2.
 ```
 
 ### split fastq files by species/groups
+#### New script: updated May 2024, dowload link [here](https://www.dropbox.com/scl/fi/z8u9cj4rngoqd9087b5xp/fastq_sep_groups.py?rlkey=ah2v8p1qqz4ji21uazecee58o&e=1&st=clpvhb6q&dl=0)  
+Here's an example of how to run the script. Make sure to update the file paths, sample information and fastq file names before you run the script. For more info, check the 'Description' section of the python script.  
+
+```SCRIPTPATH="/mydisk/scripts/fastq_sep_groups.py"
+FQ_DIR="/mydisk/exp_data/"
+
+python $SCRIPTPATH \
+--chemistry v2 \
+--fq1 ${FQ_DIR}S1_R1.fastq.gz \
+--opath ${FQ_DIR}split-fq \
+--group human A1-A3 \
+--group mouse A4-A6 \
+--group mix A7-A12
+```
+
+#### Old script, I had used this one for oyster datasets
 Downlod the [python script](https://www.dropbox.com/scl/fi/5d8zx5xjnumk2q2zvau0g/fastq_sep_groups.py?rlkey=wc58rop4yl5lmzudic3djagkw&dl=0) and update the file path before running the script, see below.  
 
 **Options:**  
