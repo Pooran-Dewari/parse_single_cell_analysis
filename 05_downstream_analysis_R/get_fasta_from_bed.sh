@@ -16,8 +16,11 @@ BED_FILE="cluster_markers_coord_C18.bed"
 # extract fasta sequences using bed file as reference
 bedtools getfasta -fi $GENOME -bed $BED_FILE -fo $BED_FILE".out"
 
-# now add gene ID to fasta header
+# fasta output from bedtools getfasta
+# >LR761642.1:12592064-12596413
+# TATCTATTGTTTATTCTACAATTAATACAAAGGCAGAAATCAAAAAT
 
+# now add gene ID to fasta header
 while read LINE;
 do
  BED=$(echo "$LINE" | awk '{print $1":"$2"-"$3}')
@@ -26,3 +29,7 @@ do
  echo "$FASTA_HEADER"
  sed -i -e "s/$BED/$FASTA_HEADER/g" $BED_FILE".out"
 done < $BED_FILE
+
+# fasta output from this script, note gene ID has been added to the header
+# >LR761642.1:12592064-12596413-G31755
+# TATCTATTGTTTATTCTACAATTAATACAAAGGCAGAAATCAAAAAT
