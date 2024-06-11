@@ -48,3 +48,8 @@ samplesheet <- read_csv("cell_metadata.csv") %>%
 sce <- read10xCounts(sample.path, col.names=TRUE, BPPARAM = bp.params)
 sce
 ```
+
+### prepare gene ID to symbol table
+```
+awk '{print $9, $10, $13, $14}' Cgigas_240605_refined3.gtf | sed 's/gene_id "//g' | sed 's/";//g' | sed 's/gene_name "//g' | grep -v "gene_\|transcript" | awk '$2' |sort -u > geneID_2_symbol.tsv
+```
