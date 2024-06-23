@@ -7,7 +7,7 @@ More details here https://support.parsebiosciences.com/hc/en-us/articles/1900479
 cat all_genes.csv | tr "," "\t" | tail -n +2 | awk '{print $1"\t"$2"\tGene Expression"}' > features.tsv
 
 #This command extracts the barcodes from the first column of the cell_metadata.csv file.
-tail -n +2 cell_metadata.csv | cut -d, -f1 > for_sce/barcodes.tsv
+tail -n +2 cell_metadata.csv | cut -d, -f1 > barcodes.tsv
 
 #This command inverts the expression matrix axes so columns represent cells and rows represent genes.
 cat <(head -1 count_matrix.mtx) <(tail -n +3 count_matrix.mtx | awk '{ print $2 " " $1 " " $3 }') > matrix.mtx
