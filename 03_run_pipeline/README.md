@@ -62,3 +62,22 @@ split-pipe \
 ```
 
 ### Run completed in 7 hours!!
+
+
+### Combine all the sub library results
+```
+#$ -V -cwd
+#$ -l h_rt=02:10:00 ###HH:MM:SS
+#$ -l h_vmem=20G
+#$ -pe sharedmem 8
+
+module load anaconda/2024.02
+conda activate spipe
+
+find "$(pwd)" -maxdepth 1 -type d -name 'a[12345678]_*' | sort > sublibs.lis
+
+split-pipe \
+    --mode comb \
+    --sublib_list sublibs.lis \
+    --output_dir ./
+```
