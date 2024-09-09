@@ -24,7 +24,7 @@ split-pipe \
 ```
 
 
-### sub-lib A1 09/10/2024
+### sub-lib A1 09/09/2024
 ```
 #$ -V -cwd
 #$ -l h_rt=12:10:00 ###HH:MM:SS
