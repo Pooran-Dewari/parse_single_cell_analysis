@@ -59,11 +59,17 @@ The barcode 2 and 3 (for cell identity) are same really, I have copied barcode 2
 . /etc/profile.d/modules.sh
 module load roslin/star/2.7.10b
 
+read1="/exports/eddie/scratch/pdewari/newvolume/A3/split-fq/A3_EKDL240002475-1A_223M7CLT4_1_group_oyster_R1.fastq.gz"
+read2="/exports/eddie/scratch/pdewari/newvolume/A3/split-fq/A3_EKDL240002475-1A_223M7CLT4_1_group_oyster_R2.fastq.gz"
+sample="3"
+temp="temp"$sample
+out="a"$sample"_results"
+
 STAR \
 --runThreadN 32 \
 --genomeDir /exports/eddie/scratch/pdewari/newvolume/genomes/cgigas_star \
 --readFilesCommand zcat \
---readFilesIn /exports/eddie/scratch/pdewari/newvolume/A1/split-fq/A1_EKDL240002473-1A_223M7CLT4_1_group_oyster_R1.fastq.gz /exports/eddie/scratch/pdewari/newvolume/A1/split-fq/A1_EKDL240002473-1A_223M7CLT4_1_group_oyster_R2.fastq.gz \
+--readFilesIn $read1 $read2 \
 --outSAMtype BAM SortedByCoordinate \
 --outSAMattributes NH HI nM AS CR UR CB UB GX GN sS sQ sM \
 --runDirPerm All_RWX \
@@ -77,10 +83,11 @@ STAR \
 --soloBarcodeReadLength 0 \
 --soloFeatures GeneFull Gene \
 --soloCellReadStats Standard \
---outTmpDir /exports/cmvm/eddie/eb/groups/bean_grp/Pooran/gigas_star/temp \
+--outTmpDir /exports/cmvm/eddie/eb/groups/bean_grp/Pooran/gigas_star/$temp \
 --limitBAMsortRAM 230854492160 \
---outFileNamePrefix /exports/cmvm/eddie/eb/groups/bean_grp/Pooran/gigas_star/a1_results \
+--outFileNamePrefix /exports/cmvm/eddie/eb/groups/bean_grp/Pooran/gigas_star/$out \
 --soloMultiMappers Rescue EM Uniform \
 --outFilterScoreMinOverLread 0.50 \
 --outFilterMatchNminOverLread 0.50
+
 ```
