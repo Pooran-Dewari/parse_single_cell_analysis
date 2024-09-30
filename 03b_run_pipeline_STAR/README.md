@@ -23,3 +23,15 @@ viv46-2-m_assembly_NR_2017.fasta
 ```
 cat ../Crassostrea_gigas_uk_roslin_v1.dna_sm.primary_assembly.fa viv46-2-m_assembly_NR_2017.fasta > Crassostrea_gigas_uk_roslin_v1_oshv_aurelie.fa
 ```
+Create a dir and move the composite genome and gtf files  
+- Crassostrea_gigas_uk_roslin_v1_oshv_aurelie.fa
+- Crassostrea_gigas_uk_roslin_v1_oshv_aurelie.gtf
+
+#### Index genome
+While in composite_genome dir, run the command below to index genome
+```
+STAR  --runMode genomeGenerate --runThreadN 4 \
+ --genomeDir /exports/eddie/scratch/pdewari/newvolume/genomes/cgigas_star \
+ --genomeFastaFiles Crassostrea_gigas_uk_roslin_v1_oshv_aurelie.fa \
+ --sjdbGTFfile Crassostrea_gigas_uk_roslin_v1_oshv_aurelie.gtf
+```
