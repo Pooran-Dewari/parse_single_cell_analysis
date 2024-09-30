@@ -44,6 +44,15 @@ Need to gather barcode whitelist files from Parse spipe output (combine output >
 The barcode 1 is sample type, I have copied all 96 barcodes into whitelist1.txt  
 The barcode 2 and 3 (for cell identity) are same really, I have copied barcode 2 into whitelist2.txt
 
+```
+$ head whitelist1.txt
+CATTCCTA
+CTTCATCA
+CCTATATC
+ACATTTAC
+ACTTAGCT
+CCAATTCT
+```
 #### run starsolo
 ## Make sure no spaces or empty lines in the STAR code, it just doesn't like it and will through some error! Do not create temp dir beforehand!
 
