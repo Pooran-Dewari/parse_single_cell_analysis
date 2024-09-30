@@ -5,12 +5,15 @@ Doing fresh analysis now to include STARSOLO mapping and also including Aurelie'
 #### Prepare composite gtf file
 Files used
 Crassostrea_gigas_uk_roslin_v1.gtf
-viv46-2-m_assembly_NR_final_ok.gtf
+viv46-2-m_assembly_NR_final_ok.gtf  
+First create gtf files if using gff files, then merge the oyster gtf with the viral genome!  
  ```
+#convert to gtf
 agat_convert_sp_gff2gtf.pl --gff viv46-2-m_assembly_NR_final_ok.gff -o viv46-2-m_assembly_NR_final_ok.gtf
+#merge host and pathogen gtf
 agat_sp_merge_annotations.pl --gff ../Crassostrea_gigas_uk_roslin_v1.gtf --gff viv46-2-m_assembly_NR_final_ok.gtf --out Crassostrea_gigas_uk_roslin_v1_oshv_aurelie.gtf
 ```
-add this bit to Crassostrea_gigas_uk_roslin_v1_oshv_aurelie.gtf file using nano command manually
+add this bit of info about chr length to the merged gtf file Crassostrea_gigas_uk_roslin_v1_oshv_aurelie.gtf file using nano command manually
 ```
 ##sequence-region   viv46-2-m_assembly_NR_final 1 186279
 ```
@@ -41,7 +44,7 @@ STAR  --runMode genomeGenerate --runThreadN 4 \
 
 #### prepare whitelist files
 Need to gather barcode whitelist files from Parse spipe output (combine output > process > barcode_data.csv).  
-The barcode 1 is sample type, I have copied all 96 barcodes into whitelist1.txt  
+The barcode 1 is sample type, I have copied all 96 barcode 1 into whitelist1.txt  
 The barcode 2 and 3 (for cell identity) are same really, I have copied barcode 2 into whitelist2.txt
 
 ```
