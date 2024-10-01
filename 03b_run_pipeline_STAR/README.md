@@ -44,7 +44,7 @@ STAR  --runMode genomeGenerate --runThreadN 4 \
 
 #### prepare whitelist files
 Need to gather barcode whitelist files from Parse spipe output (combine output > process > barcode_data.csv).  
-The barcode 1 is sample type, I have copied all 96 barcode 1 into whitelist1.txt  
+The barcode 1 is sample type, I have copied barcode 1 for my samples wells into whitelist1.txt  (don't just include all 96 wells unless you have samples in the entire plate!!)  
 The barcode 2 and 3 (for cell identity) are same really, I have copied barcode 2 into whitelist2.txt
 
 ```
