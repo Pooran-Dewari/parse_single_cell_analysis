@@ -125,7 +125,8 @@ Starsolo outputs these files:
 5- UniqueAndMult-Rescue.mtx    
 6- UniqueAndMult-Uniform.mtx  
 
-To prepare the final barcodes.tsv file, we need to extract well information for each sample barcode (i.e. barcode 1) from Parse output (combine output > process > barcode_data.csv), and then merge them with starsolo output file barcode.tsv, see the R script below:
+To prepare the final barcodes.tsv file, we need to extract well information for each sample barcode (i.e. barcode 1) from Parse output (combine output > process > barcode_data.csv), and then merge them with starsolo output file barcode.tsv, see the R script below:  
+
 Note: this is for sub-lib 1, we will have to create barcode.tsv for each sub-lib; we will create individual Seurat objects for these sub-lib and can later merge them.  
 
 ```
