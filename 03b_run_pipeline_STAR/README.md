@@ -234,16 +234,97 @@ First, copy the barcode_data.csv file from Parse, this one has barcode info for 
 cp /exports/cmvm/eddie/eb/groups/bean_grp/Pooran/oshv123/process/barcode_data.csv star_outputs_collated
 ```
 
+Now, prepare barcode.tsv file for seurat for each sub-lib in a batch fashion.
+
+```
+library(tidyverse)
+
+# Load and parse barcode data (adjust path as needed)
+parse <- read_csv("barcode_data.csv", comment = "#")
+
+# Modify Parse barcode dataframe according to your experimental design
+parse_experiment <- parse %>% 
+  mutate(barcode = case_when(
+    row_number() <= 192 ~ "barcode1",    # Rows 1-192
+    row_number() <= 288 ~ "barcode2",    # Rows 193-288
+    TRUE               ~ "barcode3"      # Rows 289-384
+  )) %>% 
+  mutate(sample = case_when(
+    barcode == "barcode1" & well %in% c("C9", "C10")  ~ "Uninfected",
+    barcode == "barcode1" & well %in% c("C11", "C12") ~ "Homogenate",
+    barcode == "barcode1" & well %in% c("D1", "D2")   ~ "6h-hpiA",
+    barcode == "barcode1" & well %in% c("D3", "D4")   ~ "6-hpiD",
+    barcode == "barcode1" & well %in% c("D5", "D6")   ~ "24-hpiA",
+    barcode == "barcode1" & well %in% c("D7", "D8")   ~ "24-hpiJ",
+    barcode == "barcode1" & well %in% c("D9", "D10")  ~ "72-hpiJ",
+    barcode == "barcode1" & well %in% c("D11", "D12") ~ "96-hpiE",
+    TRUE ~ NA_character_  # If none of the conditions match, assign NA
+  )) %>% 
+  filter(barcode == "barcode1") %>% 
+  filter(!is.na(sample))
+
+# Function to process a single directory
+process_directory <- function(dir_path) {
+  
+  # Path to the current barcodes.tsv file
+  barcode_file <- file.path(dir_path, "barcodes.tsv")
+  orig_barcode_file <- file.path(dir_path, "orig_barcodes.tsv")
+  
+  # Move the original barcodes.tsv to orig_barcodes.tsv
+  file.rename(barcode_file, orig_barcode_file)
+  
+  # Load starsolo barcodes from the original file
+  starsolo <- read_table(orig_barcode_file, col_names = F) %>% 
+    separate(X1, into = c("a","b","c"), remove = F) %>% 
+    rename(
+      bc2 = a,
+      bc3 = b,
+      bc1 = c
+    )
+  
+  # Merge starsolo dataframe with the parsed barcode data
+  merged_bc <- inner_join(starsolo, parse_experiment, by = c("bc1" = "sequence"), keep = T) %>% 
+    select(Barcodes=X1, Samples=sample, Group=well) %>% 
+    distinct()
+  
+  # Save the new barcodes.tsv file in the same subdirectory
+  new_barcode_file <- file.path(dir_path, "barcodes.tsv")
+  write_tsv(merged_bc, new_barcode_file, col_names = F)
+  
+  # Optionally, gzip the output files and keep the original (-k flag)
+  system(paste0("gzip -k ", new_barcode_file))
+  system(paste0("gzip -k ", file.path(dir_path, "features.tsv")))
+  system(paste0("gzip -k ", file.path(dir_path, "matrix.mtx")))
+}
+
+# Get all subdirectories to process
+base_dir <- "/home/pooran/Documents/seurat_thomas_scripts/star_outputs_collated"
+subdirs <- list.dirs(base_dir, full.names = TRUE, recursive = FALSE)
+
+# Loop through each subdirectory and process
+for (subdir in subdirs) {
+  process_directory(subdir)
+}
+```
 
 
 final barcode.tsv for each sub-lib will have this format:  
 ```
-ACATTCAT D10   72-hpiJ   
-ACTGTGGG C12   Homogenate
-ATCCTTAC C10   Uninfected
-ATTCTGTC D5    24-hpiA   
-CACCTTTA D2    6h-hpiA   
-CACTTTCA D1    6h-hpiA
-```
-We have four matrix files from starsolo run in our case, could use any, but Thomas advised should try UniqueAndMult-Rescue.mtx first. We will have to rename this file as matrix.mtx.
+AAACATCG_AAACATCG_ACATTCAT	72-hpiJ	D10
+AACAACCA_AAACATCG_ACATTCAT	72-hpiJ	D10
+AACCGAGA_AAACATCG_ACATTCAT	72-hpiJ	D10
+AACGCTTA_AAACATCG_ACATTCAT	72-hpiJ	D10
+AACGTGAT_AAACATCG_ACATTCAT	72-hpiJ	D10
+AACTCACC_AAACATCG_ACATTCAT	72-hpiJ	D10
+AAGACGGA_AAACATCG_ACATTCAT	72-hpiJ	D10
+AAGAGATC_AAACATCG_ACATTCAT	72-hpiJ	D10
+AAGGACAC_AAACATCG_ACATTCAT	72-hpiJ	D10
+AAGGTACA_AAACATCG_ACATTCAT	72-hpiJ	D10
 
+```
+We should have these three gzipped files for each sub-lib by now:
+- matrix.mtx.gz
+- features.tsv.gz
+- barcodes.tsv.gz
+
+## Seurat analysis
