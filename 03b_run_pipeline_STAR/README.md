@@ -227,62 +227,16 @@ echo "Script execution complete. Check $logfile for details."
 ```
 
 ### move files to server and prepare final barcode file for each sub-lib
+To prepare the final barcodes.tsv file, we need to extract well information for each sample barcode (i.e. barcode 1) from Parse output (combine output > process > barcode_data.csv), and then merge them with starsolo output file barcode.tsv.
 
-To prepare the final barcodes.tsv file, we need to extract well information for each sample barcode (i.e. barcode 1) from Parse output (combine output > process > barcode_data.csv), and then merge them with starsolo output file barcode.tsv, see the R script below:  
-
-Note: this is for sub-lib 1, we will have to create barcode.tsv for each sub-lib; we will create individual Seurat objects for these sub-lib and can later merge them.  
-
+First, copy the barcode_data.csv file from Parse, this one has barcode info for all wells.
 ```
-library(tidyverse)
-setwd("/home/pooran/Documents/seurat_thomas_scripts/barcode")
-
-# load parse barcodes
-parse <- read_csv("barcode_data.csv", comment = "#")
-
-
-# tweak Parse barcode df to your experimental design
-parse_experiment <- parse %>% 
-  mutate(barcode = case_when(
-    row_number() <= 192 ~ "barcode1",    # Rows 1-192
-    row_number() <= 288 ~ "barcode2",    # Rows 193-288
-    TRUE               ~ "barcode3"      # Rows 289-384
-  )) %>% 
-  mutate(sample = case_when(
-    barcode == "barcode1" & well %in% c("C9", "C10")  ~ "Uninfected",
-    barcode == "barcode1" & well %in% c("C11", "C12") ~ "Homogenate",
-    barcode == "barcode1" & well %in% c("D1", "D2")   ~ "6h-hpiA",
-    barcode == "barcode1" & well %in% c("D3", "D4")   ~ "6-hpiD",
-    barcode == "barcode1" & well %in% c("D5", "D6")   ~ "24-hpiA",
-    barcode == "barcode1" & well %in% c("D7", "D8")   ~ "24-hpiJ",
-    barcode == "barcode1" & well %in% c("D9", "D10")  ~ "72-hpiJ",
-    barcode == "barcode1" & well %in% c("D11", "D12") ~ "96-hpiE",
-    TRUE ~ NA_character_  # If none of the conditions match, assign NA
-  )) %>% 
-  # my samples are in well C9 to D12
-  filter(barcode == "barcode1") %>% 
-  #filter(grepl("C(9|10|11|12)|D(1[0-2]?|[1-9])", well)) %>% 
-  filter(!is.na(sample))
-
-
-# load starsolo barcodes
-starsolo <- read_delim("barcodes_a1.tsv", col_names = F, delim = "_") %>% 
-  rename(
-    bc2 = X1,
-    bc3 = X2,
-    bc1 = X3
-  )
-
-
-# intersect starsolo df with parse to get sample metadata
-merged_bc <- inner_join(starsolo, parse_experiment, by = c("bc1" = "sequence"), keep = T) %>% 
-  select(barcode=sequence, well, sample) %>% 
-  distinct()
-
-# write file
-write_tsv(merged_bc, "barcodes_a1_seurat.tsv", col_names = F)
+cp /exports/cmvm/eddie/eb/groups/bean_grp/Pooran/oshv123/process/barcode_data.csv star_outputs_collated
 ```
 
-final barcode.tsv will have this format:  
+
+
+final barcode.tsv for each sub-lib will have this format:  
 ```
 ACATTCAT D10   72-hpiJ   
 ACTGTGGG C12   Homogenate
