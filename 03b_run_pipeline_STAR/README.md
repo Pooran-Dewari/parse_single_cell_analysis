@@ -240,134 +240,98 @@ Now, prepare barcode.tsv file for seurat for each sub-lib in a batch fashion.
 library(tidyverse)
 
 # Load and parse barcode data (adjust path as needed)
-
+# you will find this csv file in parse outputs (combine output > process > barcode_data.csv)
 parse <- read_csv("barcode_data.csv", comment = "#")
 
 # Modify Parse barcode dataframe according to your experimental design
 
 parse_experiment <- parse %>% 
-  
   mutate(barcode = case_when(
-    
     row_number() <= 192 ~ "barcode1",    # Rows 1-192
-    
     row_number() <= 288 ~ "barcode2",    # Rows 193-288
-    
     TRUE               ~ "barcode3"      # Rows 289-384
-    
   )) %>% 
-  
   mutate(sample = case_when(
-    
     barcode == "barcode1" & well %in% c("C9", "C10")  ~ "Uninfected",
-    
     barcode == "barcode1" & well %in% c("C11", "C12") ~ "Homogenate",
-    
-    barcode == "barcode1" & well %in% c("D1", "D2")   ~ "6h-hpiA",
-    
+    barcode == "barcode1" & well %in% c("D1", "D2")   ~ "6-hpiA",
     barcode == "barcode1" & well %in% c("D3", "D4")   ~ "6-hpiD",
-    
     barcode == "barcode1" & well %in% c("D5", "D6")   ~ "24-hpiA",
-    
     barcode == "barcode1" & well %in% c("D7", "D8")   ~ "24-hpiJ",
-    
     barcode == "barcode1" & well %in% c("D9", "D10")  ~ "72-hpiJ",
-    
     barcode == "barcode1" & well %in% c("D11", "D12") ~ "96-hpiE",
-    
     TRUE ~ NA_character_  # If none of the conditions match, assign NA
-    
   )) %>% 
-  
   filter(barcode == "barcode1") %>% 
-  
   filter(!is.na(sample))
 
 # Function to process a single directory
-
 process_directory <- function(dir_path) {
-  
   # Path to the current barcodes.tsv file
-  
   barcode_file <- file.path(dir_path, "barcodes.tsv")
-  
   # Load starsolo barcodes from the original file
-  
   starsolo <- read_table(barcode_file, col_names = F) %>% 
-    
     separate(X1, into = c("a","b","c"), remove = F) %>% 
-    
     rename(
-      
       bc2 = a,
-      
       bc3 = b,
-      
-      bc1 = c
-      
-    )
+      bc1 = c)
   
   # Merge starsolo dataframe with the parsed barcode data
-  
   merged_bc <- inner_join(starsolo, parse_experiment, by = c("bc1" = "sequence"), keep = T) %>% 
-    
     select(Barcodes = X1, Samples = sample, Group = well) %>% 
-    
     distinct()
   
   # Save the merged data as metadata.csv in the same subdirectory
-  
   metadata_file <- file.path(dir_path, "metadata.csv")
-  
   write_csv(merged_bc, metadata_file)
   
-  # Gzip the original barcodes.tsv and the newly created metadata.csv
-  
+  # Gzip the files to comply with seurat input files
   system(paste0("gzip -k ", barcode_file))       # Gzip barcodes.tsv
-  
-  system(paste0("gzip -k ", metadata_file))       # Gzip metadata.csv
-  
+  #system(paste0("gzip -k ", metadata_file))       # Gzip metadata.csv
   system(paste0("gzip -k ", file.path(dir_path, "features.tsv")))   # Gzip features.tsv
-  
   system(paste0("gzip -k ", file.path(dir_path, "matrix.mtx")))      # Gzip matrix.mtx
-  
 }
 
 # Get all subdirectories to process
-
 base_dir <- "/home/pooran/Documents/seurat_thomas_scripts/star_outputs_collated"
-
 subdirs <- list.dirs(base_dir, full.names = TRUE, recursive = FALSE)
 
 # Loop through each subdirectory and process
-
 for (subdir in subdirs) {
-  
-  process_directory(subdir)
-  
-}
-
-
+  process_directory(subdir)}
 ```
 
 
-final barcode.tsv for each sub-lib will have this format:  
+final metadata and barcode.tsv for each sub-lib will have this format:  
 ```
-AAACATCG_AAACATCG_ACATTCAT	72-hpiJ	D10
-AACAACCA_AAACATCG_ACATTCAT	72-hpiJ	D10
-AACCGAGA_AAACATCG_ACATTCAT	72-hpiJ	D10
-AACGCTTA_AAACATCG_ACATTCAT	72-hpiJ	D10
-AACGTGAT_AAACATCG_ACATTCAT	72-hpiJ	D10
-AACTCACC_AAACATCG_ACATTCAT	72-hpiJ	D10
-AAGACGGA_AAACATCG_ACATTCAT	72-hpiJ	D10
-AAGAGATC_AAACATCG_ACATTCAT	72-hpiJ	D10
-AAGGACAC_AAACATCG_ACATTCAT	72-hpiJ	D10
-AAGGTACA_AAACATCG_ACATTCAT	72-hpiJ	D10
+$ head metadata.csv 
+Barcodes,Samples,Group
+AAACATCG_AAACATCG_ACATTCAT,72-hpiJ,D10
+AACAACCA_AAACATCG_ACATTCAT,72-hpiJ,D10
+AACCGAGA_AAACATCG_ACATTCAT,72-hpiJ,D10
+AACGCTTA_AAACATCG_ACATTCAT,72-hpiJ,D10
+AACGTGAT_AAACATCG_ACATTCAT,72-hpiJ,D10
+AACTCACC_AAACATCG_ACATTCAT,72-hpiJ,D10
+AAGACGGA_AAACATCG_ACATTCAT,72-hpiJ,D10
+AAGAGATC_AAACATCG_ACATTCAT,72-hpiJ,D10
+AAGGACAC_AAACATCG_ACATTCAT,72-hpiJ,D10
 
+$ head barcodes.tsv
+AAACATCG_AAACATCG_ACATTCAT
+AACAACCA_AAACATCG_ACATTCAT
+AACCGAGA_AAACATCG_ACATTCAT
+AACGCTTA_AAACATCG_ACATTCAT
+AACGTGAT_AAACATCG_ACATTCAT
+AACTCACC_AAACATCG_ACATTCAT
+AAGACGGA_AAACATCG_ACATTCAT
+AAGAGATC_AAACATCG_ACATTCAT
+AAGGACAC_AAACATCG_ACATTCAT
+AAGGTACA_AAACATCG_ACATTCAT
 ```
 We should have these three gzipped files for each sub-lib by now:
 - matrix.mtx.gz
 - features.tsv.gz
 - barcodes.tsv.gz
-
+- and metadata.csv  which doesn't need to be gzipped!!
 ## Seurat analysis
