@@ -328,6 +328,12 @@ AAGACGGA_AAACATCG_ACATTCAT
 AAGAGATC_AAACATCG_ACATTCAT
 AAGGACAC_AAACATCG_ACATTCAT
 AAGGTACA_AAACATCG_ACATTCAT
+
+# note both files have identical rows in the same order, the only difference is metadata file has a header
+$ wc -l metadata.csv barcodes.tsv
+  294913 metadata.csv
+  294912 barcodes.tsv
+
 ```
 We should have these three gzipped files for each sub-lib by now:
 - matrix.mtx.gz
