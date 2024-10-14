@@ -41,7 +41,6 @@ example for one sub-lib shown here, do it for all 8
 #$ -l h_vmem=20G
 #$ -l rl9=FALSE
 #$ -pe sharedmem 18
-#$ -P roslin_bean_grp
 
 module load anaconda/2024.02
 conda activate spipe
