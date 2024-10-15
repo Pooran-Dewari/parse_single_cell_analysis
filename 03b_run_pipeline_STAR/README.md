@@ -5,13 +5,18 @@ Doing fresh analysis now to include STARSOLO mapping and also including Aurelie'
 ### Notes:   
 
 Multi-gene reads
-Multi-gene reads are concordant with (i.e. align equally well to) transcripts of two or more genes. One class of multi-gene read are those that map uniquely to a genomic region where two or more genes overlap. Another class are those reads that map to multiple loci in the genome, with each locus annotated to a different gene.
-Including multi-gene reads allows for more accurate gene quantification and, more importantly, enables detection of gene expression from certain classes of genes that are supported only by multi-gene reads, such as overlapping genes and highly similar paralog families.
-The multi-gene read recovery options are specified with --soloMultiMappers. Several algorithms are implemented:
---soloMultiMappers Uniform uniformly distributes the multi-gene UMIs to all genes in its gene set. Each gene gets a fractional count of 1/N_genes, where N_genes is the number of genes in the set. This is the simplest possible option, and it offers higher sensitivity for gene detection at the expense of lower precision.
---soloMultiMappers Uniform distributes the multi-gene UMIs proportionally to the number of unqiue UMIs per gene. UMIs that map to genes that are not supported by unique UMIs are distributed uniformly.
---soloMultiMappers EM uses Maximum Likelihood Estimation (MLE) to distribute multi-gene UMIs among their genes, taking into account other UMIs (both unique- and multi-gene) from the same cell (i.e. with the same CB). Expectation-Maximization (EM) algorithm is used to find the gene expression values that maximize the likelihood function. Recovering multi-gene reads via MLE-EM model was previously used to quantify transposable elements in bulk RNA-seq {TEtranscripts} and in scRNA-seq {Alevin; Kallisto-bustools}.
---soloMultiMappers Rescue distributes multi-gene UMIs to their gene set proportionally to the sum of the number of unique-gene UMIs and uniformly distributed multi-gene UMIs in each gene Mortazavi et al. It can be thought of as the first step of the EM algorithm.
+Multi-gene reads are concordant with (i.e. align equally well to) transcripts of two or more genes. One class of multi-gene read are those that map uniquely to a genomic region where two or more genes overlap. Another class are those reads that map to multiple loci in the genome, with each locus annotated to a different gene.    
+
+Including multi-gene reads allows for more accurate gene quantification and, more importantly, enables detection of gene expression from certain classes of genes that are supported only by multi-gene reads, such as overlapping genes and highly similar paralog families.  
+
+The multi-gene read recovery options are specified with --soloMultiMappers. Several algorithms are implemented:  
+
+- **--soloMultiMappers Uniform** uniformly distributes the multi-gene UMIs to all genes in its gene set. Each gene gets a fractional count of 1/N_genes, where N_genes is the number of genes in the set. This is the simplest possible option, and it offers higher sensitivity for gene detection at the expense of lower precision.  --soloMultiMappers Uniform distributes the multi-gene UMIs proportionally to the number of unqiue UMIs per gene. UMIs that map to genes that are not supported by unique UMIs are distributed uniformly.  
+
+- **--soloMultiMappers EM** uses Maximum Likelihood Estimation (MLE) to distribute multi-gene UMIs among their genes, taking into account other UMIs (both unique- and multi-gene) from the same cell (i.e. with the same CB). Expectation-Maximization (EM) algorithm is used to find the gene expression values that maximize the likelihood function. Recovering multi-gene reads via MLE-EM model was previously used to quantify transposable elements in bulk RNA-seq {TEtranscripts} and in scRNA-seq {Alevin; Kallisto-bustools}.  
+ 
+- **--soloMultiMappers Rescue** distributes multi-gene UMIs to their gene set proportionally to the sum of the number of unique-gene UMIs and uniformly distributed multi-gene UMIs in each gene Mortazavi et al. It can be thought of as the first step of the EM algorithm.  
+
 Any combination of these options can be specified and different multi-gene falvors will be output into different files. The unique-gene UMI counts are output into the matrix.mtx file in the raw/Gene directory, while the sum of unique+multi-gene UMI counts will be output into UniqueAndMult-EM.mtx, UniqueAndMult-PropUnique.mtx, UniqueAndMult-Rescue.mtx, UniqueAndMult-Uniform.mtx files.
 
 
