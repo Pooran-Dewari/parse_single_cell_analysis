@@ -68,3 +68,28 @@ split-pipe \
     --sample Ambre8 D11-D12
 
 ```
+
+#### combine sub-libs
+
+```
+#$ -V -cwd
+#$ -l h_rt=02:10:00 ###HH:MM:SS
+#$ -l h_vmem=20G
+#$ -pe sharedmem 8
+#$ -l rl9=false
+
+
+
+
+
+module load anaconda/2024.02
+conda activate spipe
+
+find "$(pwd)" -maxdepth 1 -type d -name 'a[12345678]_*' | sort > sublibs.lis
+
+split-pipe \
+    --mode comb \
+    --sublib_list sublibs.lis \
+    --output_dir ./
+
+```
