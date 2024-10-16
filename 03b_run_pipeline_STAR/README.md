@@ -357,3 +357,17 @@ We should have these three gzipped files for each sub-lib by now:
 - barcodes.tsv.gz
 - and metadata.csv  which doesn't need to be gzipped!!
 ## Seurat analysis
+
+
+***
+
+# star analysis with default (stricter than previous run) parameters
+```
+#copy output files for seurat analysis
+scp -r pdewari@eddie.ecdf.ed.ac.uk:/exports/cmvm/eddie/eb/groups/bean_grp/Pooran/gigas_star_strict/star_outputs_collated ./
+
+# copy barcode info from the most recent parse run 
+scp -r pdewari@eddie.ecdf.ed.ac.uk:/exports/cmvm/eddie/eb/groups/bean_grp/Pooran/gigas_parse/process/barcode_data.csv ./
+
+
+```
