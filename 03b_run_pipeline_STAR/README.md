@@ -241,7 +241,38 @@ done
 
 echo "Script execution complete. Check $logfile for details."
 ```
+## option 1: this is the correct way to combine oligo dT and hexamer oligo barcoding to call nuclei
 
+Copy these files into a dir (e.g. fix_hex_oligdT, see attachments herewith)
+- bc_data_n107_R1_v3_4.csv
+- bc_data_n198_v5.csv
+- bc_data_n218_R1_v3_4.csv
+- bc_data_n24_v4.csv
+- bc_data_n26_R1_v3_4.csv
+- bc_data_n99_v5.csv
+- bc_data_R3_v3.csv
+- bc_data_v1.csv
+- bc_data_v2.csv
+- merge_parse_hexamers_polyA_captures.R
+
+All we need to do now is run a R script that uses these these barcodes and assigns cell/nuclei based on oligo dT and hexamer oligos.  
+This has to be done separately for each of the 8 sub-libs in our case; outputs a seurat object for each sub-lib.  
+
+Example script for sub-lib 1 (see attached files in the dir qsubs)
+
+```
+library(Seurat)
+setwd("/exports/cmvm/eddie/eb/groups/bean_grp/Pooran/gigas_star_strict/star_outputs_Uni_Mult_Resc_collated/fix_hex_oligdT") 
+source("merge_parse_hexamers_polyA_captures.R") 
+mat1 <- Read10X(data.dir ="/exports/cmvm/eddie/eb/groups/bean_grp/Pooran/gigas_star_strict/star_outputs_Uni_Mult_Resc_collated/a1_subdir")
+merge1 <- merge_hexamer_polyA_columns(mtx = mat1, kit = "WT_mega", version = "v2", bc_directory = "/exports/cmvm/eddie/eb/groups/bean_grp/Pooran/gigas_star_strict/star_outputs_Uni_Mult_Resc_collated/fix_hex_oligdT")
+seu_obj1 <- CreateSeuratObject(counts = merge1, project = "oyster1")
+saveRDS(seu_obj1, file = "seu_obj1.rds")
+```
+I have included qsub scripts inside the fix_hex_oligdT dir.
+
+
+## option 2: this one is no longer useful as we found some glitches... ignore steps as follows.
 ### move files to server and prepare final barcode file for each sub-lib
 To prepare the final barcodes.tsv file, we need to extract well information for each sample barcode (i.e. barcode 1) from Parse output (combine output > process > barcode_data.csv), and then merge them with starsolo output file barcode.tsv.
 
