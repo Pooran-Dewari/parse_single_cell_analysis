@@ -69,3 +69,5 @@ tree /exports/cmvm/eddie/eb/groups/bean_grp/Pooran/gigas_star_strict/star_output
 
 ## 1c: Merge Parse hexamers and polyA captures  
 Parse uses a mix of hexamers and poly(A) to capture mRNAs. We need to assign each nucleus by merging reads that come up from these two sources but the same mRNA molecule.  
+Run the bash script 'make_seu.sh' to merge hexamers and poly(A) for each of the sub-lib and create a seurat object.
+
