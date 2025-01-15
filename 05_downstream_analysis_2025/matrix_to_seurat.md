@@ -70,4 +70,7 @@ tree /exports/cmvm/eddie/eb/groups/bean_grp/Pooran/gigas_star_strict/star_output
     └── matrix.mtx.gz  
     
 
+## 1c: Merge Parse hexamers and polyA captures
+Parse uses a mix of hexamers and poly(A) to capture mRNAs. We need to assign each nucleus by merging reads that come up from these two sources but the same mRNA molecule.  
+
 
