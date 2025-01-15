@@ -18,10 +18,10 @@ Directory structure of one of the Solo.out is as follows:
 
 tree /exports/cmvm/eddie/eb/groups/bean_grp/Pooran/gigas_star_strict/a2_resultsSolo.out/GeneFull/raw  
 
-├── barcodes.tsv  -> use this
-├── features.tsv  -> use this
+├── **barcodes.tsv -> use this**  
+├── **features.tsv -> use this**  
 ├── matrix.mtx  
-├── UniqueAndMult-EM.mtx  -> use this
+├── **UniqueAndMult-EM.mtx -> use this**  
 ├── UniqueAndMult-Rescue.mtx  
 └── UniqueAndMult-Uniform.mtx  
 
