@@ -1,6 +1,6 @@
 **Until now:** Single-nucleus Parse datasets were mapped to C gigas genome using starsolo. We will be using EM matrix output files for downstream analysis.  
 
-# 1: Prepare files for seurat  
+# 1: Prepare files for seurat and create seurat object for each sub-lib  
 ## 1a: Directory structure of starsolo outputs  
 tree -d -L 1 /exports/cmvm/eddie/eb/groups/bean_grp/Pooran/gigas_star_strict  
 ├── a1_resultsSolo.out  
@@ -67,7 +67,7 @@ tree /exports/cmvm/eddie/eb/groups/bean_grp/Pooran/gigas_star_strict/star_output
 ├── features.tsv.gz  
 └── matrix.mtx.gz   
 
-## 1c: Merge Parse hexamers and polyA captures  
+## 1c: Merge Parse hexamers and polyA captures and create seurat objects
 Parse uses a mix of hexamers and poly(A) to capture mRNAs. We need to assign each nucleus by merging reads that come up from these two sources but the same mRNA molecule.  
 Run the bash script 'make_seu.sh' to merge hexamers and poly(A) for each of the sub-lib and create a seurat object.
 
