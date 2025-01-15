@@ -28,6 +28,46 @@ tree /exports/cmvm/eddie/eb/groups/bean_grp/Pooran/gigas_star_strict/a2_resultsS
 we will use barcodes.tsv,  features.tsv, and  UniqueAndMult-EM.mtx  for downstream analysis.   
 
 ## 1b: Collate the above three files for each sub-library into one dir
-The attached script 'star_outputs_unique_multi_EM_collate_gz.sh' will look into each of the eight Solo.out > GeneFull/raw dirs and copy the above three files into a new dir.  
-Note: To comply with seurat requirements, we will rename UniqueAndMult-EM.mtx --> matrix.mtx, and gzip all three files after they have been copied.
+The attached script 'star_outputs_unique_multi_EM_collate_gz.sh' will look into each of the eight Solo.out > GeneFull/raw dirs and copy the above three files into a new dir.    
+Note: To comply with seurat requirements, we will rename UniqueAndMult-EM.mtx --> matrix.mtx, and gzip all three files after they have been copied.  
+Run the bash script to collate these files, make sure you have all 8 sub-libs Solo.out dirs in the working dir.  
+
+Directory structure of collated files is as follows:
+
+tree /exports/cmvm/eddie/eb/groups/bean_grp/Pooran/gigas_star_strict/star_outputs_Uni_Mult_EM_collated  
+/exports/cmvm/eddie/eb/groups/bean_grp/Pooran/gigas_star_strict/star_outputs_Uni_Mult_EM_collated  
+├── a1_subdir  
+│   ├── barcodes.tsv.gz  
+│   ├── features.tsv.gz  
+│   └── matrix.mtx.gz  
+├── a2_subdir  
+│   ├── barcodes.tsv.gz  
+│   ├── features.tsv.gz  
+│   └── matrix.mtx.gz  
+├── a3_subdir  
+│   ├── barcodes.tsv.gz  
+│   ├── features.tsv.gz  
+│   └── matrix.mtx.gz  
+├── a4_subdir  
+│   ├── barcodes.tsv.gz  
+│   ├── features.tsv.gz  
+│   └── matrix.mtx.gz  
+├── a5_subdir  
+│   ├── barcodes.tsv.gz  
+│   ├── features.tsv.gz  
+│   └── matrix.mtx.gz  
+├── a6_subdir  
+│   ├── barcodes.tsv.gz  
+│   ├── features.tsv.gz  
+│   └── matrix.mtx.gz  
+├── a7_subdir  
+│   ├── barcodes.tsv.gz  
+│   ├── features.tsv.gz  
+│   └── matrix.mtx.gz  
+└── a8_subdir  
+    ├── barcodes.tsv.gz  
+    ├── features.tsv.gz  
+    └── matrix.mtx.gz  
+    
+
 
