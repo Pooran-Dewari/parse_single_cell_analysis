@@ -68,6 +68,5 @@ tree /exports/cmvm/eddie/eb/groups/bean_grp/Pooran/gigas_star_strict/star_output
 └── matrix.mtx.gz   
 
 ## 1c: Merge Parse hexamers and polyA captures and create seurat objects
-Parse uses a mix of hexamers and poly(A) to capture mRNAs. We need to assign each nucleus by merging reads that come up from these two sources but the same mRNA molecule.  
-Run the bash script 'make_seu.sh' to merge hexamers and poly(A) for each of the sub-lib and create a seurat object.
+Parse uses a mix of hexamers and poly(A) to capture mRNAs. We need to assign each nucleus by merging reads that come up from these two sources but the same mRNA molecule. Run the bash script 'make_seu.sh' to merge hexamers and poly(A) and create a seurat object for each of the sub-lib.
 
