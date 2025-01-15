@@ -28,5 +28,6 @@ tree /exports/cmvm/eddie/eb/groups/bean_grp/Pooran/gigas_star_strict/a2_resultsS
 we will use barcodes.tsv,  features.tsv, and  UniqueAndMult-EM.mtx  for downstream analysis.   
 
 ## 1b: Collate the above three files for each sub-library into one dir
-
+The attached script 'star_outputs_unique_multi_EM_collate_gz.sh' will look into each of the eight Solo.out > GeneFull/raw dirs and copy the above three files into a new dir.  
+Note: To comply with seurat requirements, we will rename UniqueAndMult-EM.mtx --> matrix.mtx, and gzip all three files after they have been copied.
 
