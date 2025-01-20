@@ -62,3 +62,6 @@ walk(names(clusters), function(cluster_name) {
 })
 
 
+#step5: bash, run gimme motifs
+#install: conda create -n gimme gimmemotifs
+#run: 
