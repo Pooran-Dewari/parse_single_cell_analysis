@@ -12,7 +12,10 @@ gff_v2 <- gff %>%
   select(1:3, 5, 7, 10) %>% 
   filter(type == "gene") %>%
   separate(col = "ID", sep = ":", into = c("feature", "gene"), remove = FALSE) %>% 
-  select(1:4, 8)
+  select(1:4, 8) %>% 
+  mutate(start = start-200) %>% 
+  mutate(end = start+202) %>%  #promoter is roughly 200 bp upstream of TSS
+  rename(promoter = start, tss_end = end)
 
 #step2: prepare gene hits df
 all_markers_test_seu <- FindAllMarkers(object = test_seu, min.pct = 0.20, log2fc.threshold = 0.25)
@@ -57,3 +60,5 @@ walk(names(clusters), function(cluster_name) {
     quote = FALSE
   )
 })
+
+
