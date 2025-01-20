@@ -64,4 +64,5 @@ walk(names(clusters), function(cluster_name) {
 
 #step5: bash, run gimme motifs
 #install: conda create -n gimme gimmemotifs
-#run: 
+#run: gimme motifs cluster_10.bed test  -g ../genome/Crassostrea_gigas_uk_roslin_v1.dna_sm.primary_assembly.fa -s 101 --denovo
+#make sure you have input bed file and output dir in the same order as above
