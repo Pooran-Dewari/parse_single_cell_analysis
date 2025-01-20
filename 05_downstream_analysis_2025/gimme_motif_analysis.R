@@ -64,5 +64,5 @@ walk(names(clusters), function(cluster_name) {
 
 #step5: bash, run gimme motifs
 #install: conda create -n gimme gimmemotifs
-#run: gimme motifs cluster_10.bed cluster10  -g ../genome/Crassostrea_gigas_uk_roslin_v1.dna_sm.primary_assembly.fa -s 101 --denovo
-#make sure you have input bed file and output dir in the same order as above
+#run: gimme motifs cluster_7.bed  cluste_07 -g ../genome/Crassostrea_gigas_uk_roslin_v1.dna_sm.primary_assembly.fa -s 101 -p 'JASPAR2020' --fraction 0.5
+#make sure you have input bed file and output dir in the same order as above; --fraction makes sure if uses more input peaks than default 20%
