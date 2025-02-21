@@ -663,6 +663,19 @@ saveRDS(test_seu, file = "test_seu_umap_20dim_6res_3kFeat.rds")
 
 ###########
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 #start here next day
 
 library(Seurat)
@@ -751,8 +764,8 @@ all_markers_test_seu_ann <- left_join(all_markers_test_seu, ORSON, by = c("gene"
   left_join(., cg_science, by = c("gene"="Gene.ID")) %>% 
   relocate(Gene.symbol.science, .after = Sequence.Description)
 
-all_markers_test_seu_ann_13 <- all_markers_test_seu_ann %>% 
-  filter(cluster == 13)
+# all_markers_test_seu_ann_13 <- all_markers_test_seu_ann %>% 
+#   filter(cluster == 13)
 
 all_markers_test_seu_ann_up_significant <- all_markers_test_seu_ann %>% 
   filter(avg_log2FC > 1.5 & pct.2 < 0.05 & pct.1 > 0.2)
@@ -1356,7 +1369,7 @@ haem_mark_list <- split(haem_markers$gene, haem_markers$cluster)
 
 
 # plot top 30 genes
-DotPlot(test_seu, features = haem_mark_list[[3]][1:30])+
+DotPlot(test_seu, features = haem_mark_list[[7]][1:30])+
   coord_flip()+
   RotatedAxis()+
   ylab('Cluster') +  xlab('Marker genes (Divonne et al 2024)')+
@@ -1364,7 +1377,7 @@ DotPlot(test_seu, features = haem_mark_list[[3]][1:30])+
   theme(plot.title = element_text(hjust = 0.5))+
   theme(axis.text.y=element_text(size=10),axis.text.x=element_text(size=12)) 
 ############### summary Divonne et al markers in our clusters
-#cluster1: not great; can't see any specific markers
+#cluster1: not great; can't see any specific markers; macrophage-like cells
 #cluster2 : some good markers seen in our cluster6 (2182 nuclei); c("G32588", "G2457"); Hyalinocytes
 #cluster3: c("G15881", "G12733", "G5864") in our cluster6; small granule cells
 #cluster4: not great; mostly in cluster9 but not very specific?
@@ -1414,15 +1427,33 @@ as.data.frame(table(seu_obj@meta.data$seurat_clusters))
 #assign and label cell type based on markers
 DimPlot(test_seu, reduction = "umap", label=T, label.box = F)
 
-new.cluster.ids <- c(new.cluster.ids <- c("Gill_ciliary_cells(0)", "Hepatopancreas(1)", "Mantle?(2)",
-                                          "Gill_NEC(3)", "Gill_type1(4)", "Hyalinocytes(5)", 
-                                          "Macrophage_like_BBL(6)","Infection_response_7", 
-                                          "Mantle_or_Vesicular_cells?(8)",
-                                          "Immature_haemocytes(9)", "Mantle_sensory?(10)", "Adductor(1)", 
-                                          "Gill_NEC?(12)", "Macrophage_like(13)", "Mantle(14)",
-                                          "Vesicular_cells(15)", "Gill_type2?(16)", 
-                                          "Haemocytes?(17)", "Small_granule_cells(18)",
-                                          "Cell_cycle_rubbish(19)", "Hepatopancreas_gills?(20)"))
+# new.cluster.ids <- c(new.cluster.ids <- c("Gill_ciliary (0)", "Hepatopancreas (1)", 
+#                                           "Cluster 2 (2)",
+#                                           "Gill_NEC (3)", "Gill_type 1 (4)", "Hyalinocyte (5)", 
+#                                           "Haemocyte 1 (6)","Infection_response (7)", 
+#                                           "Cluster 8 (8)",
+#                                           "Immature_haemocyte (9)", 
+#                                           "Cluster 10 (10)", 
+#                                           "Adductor (11)", 
+#                                           "Cluster 12 (12)", 
+#                                           "Macrophage_like (13)", "Mantle (14)",
+#                                           "Gill_type 2 (15)", "Gill_type 3 (16)", 
+#                                           "Digestive_gland (17)", "Small_granule_cell (18)",
+#                                           "Cell_cycle_related (19)", "Cluster 20 (20)"))
+
+new.cluster.ids <- c(new.cluster.ids <- c("Gill_ciliary (0)", "Hepatopancreas (1)", 
+                                          "Cluster 2",
+                                          "Gill_NEC (3)", "Gill_type 1 (4)", "Hyalinocyte (5)", 
+                                          "Haemocyte 1 (6)","Infection_response (7)", 
+                                          "Cluster 8",
+                                          "Immature_haemocyte (9)", 
+                                          "Cluster 10", 
+                                          "Adductor (11)", 
+                                          "Cluster 12", 
+                                          "Macrophage_like (13)", "Mantle (14)",
+                                          "Gill_type 2 (15)", "Gill_type 3 (16)", 
+                                          "Digestive_gland (17)", "Small_granule_cell (18)",
+                                          "Cell_cycle (19)", "Cluster 20"))
 
 names(new.cluster.ids) <- levels(test_seu)
 
@@ -1444,7 +1475,7 @@ my_colors <- c("Gill_ciliary_cells(0)"= "deeppink1", "Hepatopancreas(1)"="aquama
                "Gill_NEC?(12)"= "deeppink1", "Macrophage_like(13)"="darkorange", 
                "Mantle(14)"= "royalblue1", "Vesicular_cells(15)"="darkorange", 
                "Gill_type2?(16)"= "deeppink1", "Haemocytes?(17)"="darkorange",
-               "Small_granule_cells(18)"="darkorange", "Cell_cycle_rubbish(19)"="cyan1",
+               "Small_granule_cells(18)"="darkorange", "Cell_cycle_related(19)"="cyan1",
                "Hepatopancreas_gills?(20)"="brown")
 
 
@@ -1455,7 +1486,183 @@ DimPlot(test_seu, reduction = "umap", label = T,
   ggtitle("Single-nucleus atlas of Paciifc oyster")+
   theme(plot.title = element_text(hjust = 0.5))
 
-###########
+
+
+######## 20 Feb 2025
+#key markers
+
+# clear cut cell type assigned for these
+VlnPlot(test_seu, features = c("G2457", "G32588")) #cluster5 Hyalinocytes
+VlnPlot(test_seu, features = c("G12733", "G5864")) #cluster18 SGC
+VlnPlot(test_seu, features = c("G384", "G22986")) #cluster 6, haemocyte 1
+VlnPlot(test_seu, features = c("G13140", "G25309")) #cluster 15 gills 2
+VlnPlot(test_seu, features = c("G32748", "G20782")) #cluster 9 immature haemocytes
+VlnPlot(test_seu, features = c("G6983", "G2310")) #cluster 13 macrophage-like
+VlnPlot(test_seu, features = c("G8077", "G8546")) #cluster 7 immune reponse
+VlnPlot(test_seu, features = c("G7179", "G11503" )) #cluster 0 gill ciliary
+VlnPlot(test_seu, features = c("G3157", "G13652" )) #cluster 3 gill NEC
+VlnPlot(test_seu, features = c("G27156", "G6819" )) #cluster 4 gill 1
+VlnPlot(test_seu, features = c("G22673", "G27503" )) #cluster 16 gill 3
+VlnPlot(test_seu, features = c("G7827", "G4180" )) #cluster 14 mantle
+VlnPlot(test_seu, features = c("G25637", "G3128" )) #cluster 11 adductor muscle
+VlnPlot(test_seu, features = c("G21910", "G12025" )) #cluster 1 hepatopancreas
+VlnPlot(test_seu, features = c("G15965", "G15964" )) #cluster 17 digestive gland
+
+#these clusters couldn't be assigned to any specific cell type/tissue
+VlnPlot(test_seu, features = c("G1208", "G21268" ))  #cluster 2; not very specific markers though
+VlnPlot(test_seu, features = c("G18439", "G25991" ))  #cluster 8; look highly specific
+VlnPlot(test_seu, features = c("G10190", "G25152"))  #cluster 10
+VlnPlot(test_seu, features = c("G10388", "G4381" ))  #cluster 12
+# cluster 19 is cyclin genes, so no point getting markers for this cluster
+VlnPlot(test_seu, features = c("G27937","G27023"))  #cluster 20
+
+#1st gene IDs of marker genes from above
+first_marker <- c("G2457", "G12733", "G384", "G13140", "G32748", "G6983", "G8077", "G7179", 
+  "G3157", "G27156", "G22673", "G7827", "G25637", "G21910", "G15965", 
+  "G1208", "G18439", "G10190", "G10388", "G27937")
+
+#2n gene IDs of marker genes from above
+second_marker <- c("G32588", "G5864", "G22986", "G25309", "G20782", "G2310", "G8546", "G11503", 
+  "G13652", "G6819", "G27503", "G4180", "G3128", "G12025", "G15964", 
+  "G21268", "G25991", "G25152", "G4381", "G27023")
+
+#both markers
+both_markers <- c(first_marker, second_marker)
+#not make the stacked violin plot
+#Stacked_VlnPlot(test_seu , features = first_marker)
+
+# Generate the stacked violin plot and store it in a variable
+stacked_plot <- Stacked_VlnPlot(test_seu, features = first_marker,  x_lab_rotate = TRUE)+
+  coord_flip()
+
+# Save the plot as a high-quality PNG
+ggsave(filename = "stacked_vlnplot.png", plot = stacked_plot, width = 10, height = 8, dpi = 300)
+
+Clustered_DotPlot(test_seu, features = both_markers)
+# Or save as PDF for vector quality
+#ggsave(filename = "stacked_vlnplot.pdf", plot = stacked_plot, width = 10, height = 8)
+
+
+
+
+
+#################################################################################################################
+#doheatmap figure1 for PUBLICATION
+doHeatmap_plot <- DoHeatmap(test_seu, features = top_markers_test_seu, angle = 90, size = 3.2)+
+  scale_fill_gradientn(colors = c("black", "yellow")) + 
+  #NoLegend()+
+  theme(plot.margin = margin(t=60, 10, 10, 10)) +
+  theme(axis.text.y = element_blank()) #remove gene names on the left
+
+#save plot
+ggsave("figures/doHeatmap_plot.pdf", plot = doHeatmap_plot, width = 12, height = 8, dpi = 300)
+ggsave("figures/doHeatmap_plot.png", plot = doHeatmap_plot, width = 12, height = 8, dpi = 300)
+
+#......................
+
+feature_plot <- FeaturePlot(test_seu, features = first_marker)
+ggsave("figures/feature_plot.pdf", plot = feature_plot, width = 12, height = 8, dpi = 300)
+ggsave("figures/feature_plot.png", plot = feature_plot, width = 12, height = 8, dpi = 300)
+
+#...................
+
+
+#...................
+#............................
+#clustered dotplot for the top 5 genes per cluster
+clustered_dotplot_list <- Clustered_DotPlot(test_seu, features = top_markers_test_seu, show_ident_colors = F,
+                  row_label_size = 0,  cluster_ident = F, cluster_feature = F, x_lab_rotate = 90)
+
+clustered_dotplot <- clustered_dotplot_list[[2]] #second item in the list is the plot we want
+
+#note: ggsave can't save this class of object!!
+#png("figures/clustered_dotplot.png", width = 20, height = 30, units="cm", res = 300) #if png needed
+pdf("figures/clustered_dotplot.pdf")
+library(ComplexHeatmap)
+
+draw(clustered_dotplot)
+dev.off()
+
+#................................................
+
+#stacked violin plots for two markers
+
+stacked_plot <- Stacked_VlnPlot(test_seu, features = first_marker,  x_lab_rotate = 90)
+
+# Save the plot as a high-quality PNG
+ggsave(filename = "figures/stacked_vlnplot.png", plot = stacked_plot, width = 10, height = 8, dpi = 300)
+ggsave(filename = "figures/stacked_vlnplot.pdf", plot = stacked_plot, width = 10, height = 8, dpi = 300)
+
+#try two genes each for all haemocyte populations
+stacked_plot_haem <- Stacked_VlnPlot(test_seu, features = c("G2457", "G32588",
+                                                        "G12733", "G5864",
+                                                        "G384", "G22986", "G32748", "G20782",
+                                                        "G6983", "G2310","G8077", "G8546"), x_lab_rotate = 90)
+
+ggsave("figures/stacked_plot_haem.pdf", plot = stacked_plot_haem, width = 16, height = 8, dpi = 300)
+
+#gill
+stacked_plot_gill <- Stacked_VlnPlot(test_seu, features = c("G13140", "G25309","G7179", 
+                                                            "G11503" ,"G3157", "G13652",
+                                                            "G27156", "G6819" ,"G22673", 
+                                                            "G27503"), x_lab_rotate = 90)
+
+ggsave("figures/stacked_plot_gill.pdf", plot = stacked_plot_gill, width = 16, height = 8, dpi = 300)
+
+#other tissues
+stacked_plot_tissues <- Stacked_VlnPlot(test_seu, features = c("G7827", "G4180",
+                                                               "G25637", "G3128",
+                                                               "G21910", "G12025",
+                                                               "G15965", "G15964"), x_lab_rotate = 90)
+
+ggsave("figures/stacked_plot_tissues.pdf", plot = stacked_plot_tissues, width = 16, height = 8, dpi = 300)
+
+
+#unassigned clusters
+stacked_plot_unassign <- Stacked_VlnPlot(test_seu, features = c("G1208", "G21268", "G18439",
+                                                                "G25991", "G10190", "G25152",
+                                                                "G10388", "G4381", "G27937",
+                                                                "G27023"), x_lab_rotate = 90)
+
+ggsave("figures/stacked_plot_unassign.pdf", plot = stacked_plot_unassign, width = 16, height = 8, dpi = 300)
+
+
+#..............................
+
+#umap with label box
+umap_plot <- DimPlot(test_seu, reduction = "umap", label = T, 
+        pt.size = 0.5, repel = T, label.box = T, 
+        sizes.highlight = F, label.size = 6) + 
+  #NoLegend()+
+  ggtitle("Single-nucleus atlas of Paciifc oyster")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggsave("figures/umap.pdf", plot = umap_plot, width = 16, height = 12, dpi = 300)
+ggsave("figures/umap.png", plot = umap_plot, width = 16, height = 12, dpi = 300)
+
+#umap without label box
+umap_plot1 <- DimPlot(test_seu, reduction = "umap", label = F, 
+                     pt.size = 0.5, repel = T, label.box = T, 
+                     sizes.highlight = F, label.size = 6) + 
+  #NoLegend()+
+  ggtitle("Single-nucleus atlas of Paciifc oyster")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggsave("figures/umap1.pdf", plot = umap_plot1, width = 16, height = 12, dpi = 300)
+ggsave("figures/umap1.png", plot = umap_plot1, width = 16, height = 12, dpi = 300)
+########################################################################
+
+
+#finally make stacked violin plot for figure
+Stacked_VlnPlot(test_seu , features = c("G2457","G32588", #hyalinocytes
+                                        "G12733", "G5864", "G572", "G30939", #SGC
+                                        "G384", "G22986", #haemocyte 1
+                                        "G13140", "G25309", #most likely gills
+                                        "G22661", "G32748", "G20782", #immature haemocytes
+                                        "G6983", "G2310", #macrophage-like
+                                        "G8077", "G8546"),  #immune response
+                x_lab_rotate = TRUE)
+
 
 #17 Jan 2025
 # quick check viral transcripts
