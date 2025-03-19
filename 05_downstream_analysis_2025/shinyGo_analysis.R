@@ -86,6 +86,7 @@ for (cluster_id in unique_clusters) {
 
 ###################### Step 6: Plot the dot plot using ggplot2 ###############################
 
+#.................... 6a: manual one plot at a time
 # Load up and down genes shinyGO results for cluster 7
 go_up <- read_csv("shinygo/up_cl_7.csv") %>% 
   mutate(Condition = "up_genes")
@@ -108,3 +109,48 @@ ggplot(data = go_combined, aes(x = Condition, y = Pathway,
   ggtitle("GO Biological Process enrichment")+
   theme(plot.title = element_text(hjust = 0.5))+
   theme(axis.text.y=element_text(size=10),axis.text.x=element_text(size=12))
+
+#.................... 6b: batch processing
+# Requires shinyGO csv files for up and down in shinygo directory
+# You need to amend number of clusters in the script below
+
+library(tidyverse)
+
+# Ensure the output directory exists
+output_dir <- "shinygo/shiny_plots"
+dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
+
+# Extract unique cluster numbers from filenames
+clusters <- 0:20  # Update this if you have more clusters
+
+# Loop over each cluster and generate plots
+for (cl in clusters) {
+  # Read data for the current cluster
+  go_up <- read_csv(paste0("shinygo/up_cluster_", cl, ".csv")) %>%
+    mutate(Condition = "up_genes")
+  
+  go_down <- read_csv(paste0("shinygo/down_cluster_", cl, ".csv")) %>%
+    mutate(Condition = "down_genes")
+  
+  # Combine data
+  go_combined <- bind_rows(go_up, go_down) %>%
+    mutate(Condition = factor(Condition, levels = c("up_genes", "down_genes")))
+  
+  # Plot
+  plot <- ggplot(data = go_combined, aes(x = Condition, y = Pathway, 
+                                         color = `Enrichment FDR`, size = `Fold Enrichment`)) + 
+    geom_point() +
+    scale_color_gradient(low = "red", high = "blue") +
+    theme_bw() + 
+    ylab("") + 
+    xlab(paste("Cluster", cl)) + 
+    ggtitle(paste("GO Biological Process Enrichment - Cluster", cl)) +
+    theme(plot.title = element_text(hjust = 0.5)) +
+    theme(axis.text.y=element_text(size=8), axis.text.x=element_text(size=8))
+  
+  # Save plot in shinygo/shiny_plots
+  ggsave(filename = paste0(output_dir, "/GO_Enrichment_Cluster_", cl, ".png"), 
+         plot = plot, width = 10, height = 12)
+}
+
+
