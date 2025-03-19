@@ -77,7 +77,7 @@ for (cluster_id in unique_clusters) {
 # Select species: Crassostrea gigas Pacific oyster - GCA_902806645.1
 # In the input gene list, e.g. paste all up genes for cluster 0, you can query only one gene list at a time
 # In the background gene list, paste background genes from step 2 above
-# Submit job and select GO Biological Process under Pathway database menu, select 30 pathways to show
+# Submit job and select 'GO Biological Process' under Pathway database menu, select 30 pathways to show, check 'Remove redundancy' and 'Show pathway IDs'; uncheck 'Abbreviate pathways'
 # Sort results by 'Select by FDR, sort by Fold Enrichment'
 # Download 'Top Pathways shown above' in shinygo directory, we are interested in GO BP only.
 # Fold enrichment is defined as the percentage of genes in your list that are in a pathway divided by the corresponding percentage in the background genes
