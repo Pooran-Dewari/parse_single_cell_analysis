@@ -1,30 +1,85 @@
-library(ggvenn)
-library(Seurat)
-library(dplyr)
 
-# Create a parent directory to store all results
+# load packages
+library(Seurat)
+library(tidyverse)
+library(Matrix)
+library(harmony)
+library(scCustomize)
+library(dittoSeq)
+library(ggvenn)
+
+
+##### step 1: load Seurat object & prepare columns for group comparison #######
+
+# Set the working directory
+setwd("/home/pooran/Documents/parse_2025/seurat_2025/")
+
+# load Seurat object with pca, harmony, umap done beforehand!
+seu_obj <- read_rds("seu_obj_umap_18d_6r_3kRes.rds")
+seu_obj 
+
+new.cluster.ids <- c("cluster0", "cluster1", "gill_ciliary",
+                     "hepatopancreas", "gill_nec", "gill_type1",
+                     "hyalinocytes", "haemocytes_type1",
+                     "cluster8", "cluster9", "mantle_vesicular",
+                     "immature_haemocytes", "macrophage_like",
+                     "adductor_muscle", "mantle", "digestive_gland",
+                     "gill_type2", "small_granules_cells")
+
+names(new.cluster.ids) <- levels(seu_obj)
+
+seu_obj <- RenameIdents(seu_obj, new.cluster.ids) # add cluster info to Idents
+
+#add the annotations to metadata column
+#seu_obj$seurat_annotations <- Idents(seu_obj)
+
+
+#add new condition column to metadata for grouping
+#24-hpiA shows bad qPCR for viral dna, so putting "unsure" there
+seu_obj$condition_new <- case_when(
+  seu_obj$sample %in% c("Homogenate", "Uninfected") ~ "control",
+  seu_obj$sample %in% c("6-hpiA", "6-hpiD") ~ "early",
+  seu_obj$sample %in% "24-hpiA" ~ "mid?",
+  seu_obj$sample %in% "24-hpiJ" ~ "mid",
+  seu_obj$sample %in% c("72-hpiJ", "96-hpiE") ~ "late",
+  TRUE ~ "unknown"  # Optional: Handles unexpected values
+)
+
+unique(seu_obj$condition_new)
+
+# reorder levels in the condition_new
+seu_obj$condition_new <- factor(seu_obj$condition_new, 
+                                levels = c("control", "early", "mid?", "mid", "late"))
+
+
+# subset the Seurat object to exclude 'mid?' , i.e. 24hA
+seu_obj_clean <- subset(seu_obj, subset = condition_new != "mid?")
+
+rm(seu_obj)
+
+# drop unused levels
+seu_obj_clean$condition_new <- droplevels(seu_obj_clean$condition_new)
+
+# create a column in meta data to hold cluster info & condition
+# we will use info from this column to compare groups
+seu_obj_clean$sample_subtypes <- paste(Idents(seu_obj_clean), seu_obj_clean$condition_new, sep = "_")
+Idents(seu_obj_clean) <- "sample_subtypes" # seurat object now has new Idents = old idents + condition_new
+unique(seu_obj_clean$sample_subtypes)
+
+
+
+##### step 2: find DE genes, append to global lists, and plot venn diagram  ####
+
+# Create a parent directory to store results
 parent_dir <- "venn_plots"
 dir.create(parent_dir, showWarnings = FALSE)
 
-# Initialize the global list structure for upregulated and downregulated genes
-all_up_genes_by_condition <<- list(
-  early = list(),
-  mid = list(),
-  late = list()
-)
+# Initialize global lists for upregulated and downregulated genes
+all_up_genes_by_condition <<- list(early = list(), mid = list(), late = list())
+all_down_genes_by_condition <<- list(early = list(), mid = list(), late = list())
 
-all_down_genes_by_condition <<- list(
-  early = list(),
-  mid = list(),
-  late = list()
-)
-
-# Define function to perform DE analysis for each condition
+# Function to perform DE analysis for each condition
 perform_comparison <- function(condition) {
-  # Create a subdirectory for the specific condition inside the parent directory
-  #condition_dir <- file.path(parent_dir, condition)
-  #dir.create(condition_dir, showWarnings = FALSE)
-  
   control_clusters <- unique(seu_obj_clean$sample_subtypes[grepl("control", seu_obj_clean$sample_subtypes)])
   target_clusters <- unique(seu_obj_clean$sample_subtypes[grepl(condition, seu_obj_clean$sample_subtypes)])
   
@@ -32,22 +87,10 @@ perform_comparison <- function(condition) {
   control_clusters <- control_clusters[order(gsub("_control", "", control_clusters))]
   target_clusters <- target_clusters[order(gsub(paste0("_", condition), "", target_clusters))]
   
-  # Print control and target clusters to check their values
-  print(paste("Control clusters for", condition, ":"))
-  print(control_clusters)
-  print(paste("Target clusters for", condition, ":"))
-  print(target_clusters)
-  
-  # Loop through each pair of control and target clusters
-  for (i in 1:length(control_clusters)) {
+  for (i in seq_along(control_clusters)) {
     control_label <- control_clusters[i]
     target_label <- target_clusters[i]
-    
-    # Extract the readable tissue/type name from control_label
-    tissue_name <- gsub("_control", "", control_label)  # e.g., "adductor_muscle"
-    
-    #comparison_dir <- file.path(condition_dir, paste0(tissue_name, "_control_vs_", condition))
-    #dir.create(comparison_dir, showWarnings = FALSE)
+    tissue_name <- gsub("_control", "", control_label)
     
     # Perform differential expression analysis
     cluster_control_target <- FindMarkers(seu_obj_clean, logfc.threshold = 1,
@@ -57,121 +100,63 @@ perform_comparison <- function(condition) {
       filter(p_val_adj < 0.01) %>%
       rownames_to_column(var = "gene")
     
-    # Print the number of DE genes found
-    print(paste("Found", nrow(cluster_control_target), "differentially expressed genes between", control_label, "and", target_label))
-    
     # Get upregulated and downregulated genes
     valid_up_genes <- cluster_control_target %>% filter(avg_log2FC < -1) %>% pull(gene)
     valid_down_genes <- cluster_control_target %>% filter(avg_log2FC > 1) %>% pull(gene)
     
     # Remove NA and empty values
-    valid_up_genes <- valid_up_genes[!is.na(valid_up_genes) & valid_up_genes != ""]
-    valid_down_genes <- valid_down_genes[!is.na(valid_down_genes) & valid_down_genes != ""]
+    valid_up_genes <- valid_up_genes[valid_up_genes != "" & !is.na(valid_up_genes)]
+    valid_down_genes <- valid_down_genes[valid_down_genes != "" & !is.na(valid_down_genes)]
     
-    # Add upregulated genes to the global list for the current condition and cluster
-    if (length(valid_up_genes) > 0) {
-      print(paste("Adding", length(valid_up_genes), "upregulated genes for", tissue_name, condition, "to the list"))
+    if (length(valid_up_genes) > 0) 
       all_up_genes_by_condition[[condition]][[tissue_name]] <<- valid_up_genes
-    }
     
-    # Add downregulated genes to the global list for the current condition and cluster
-    if (length(valid_down_genes) > 0) {
-      print(paste("Adding", length(valid_down_genes), "downregulated genes for", tissue_name, condition, "to the list"))
+    if (length(valid_down_genes) > 0) 
       all_down_genes_by_condition[[condition]][[tissue_name]] <<- valid_down_genes
-    }
   }
 }
 
-# Run function for different comparisons (early, mid, late)
-comparison_conditions <- c("early", "mid", "late")
-lapply(comparison_conditions, perform_comparison)
+# Run function for different conditions
+lapply(c("early", "mid", "late"), perform_comparison)
 
-# Create necessary directories for storing the Venn diagrams
-venn_up_dir <- file.path(parent_dir, "venn_diagram", "venn_up")
-venn_down_dir <- file.path(parent_dir, "venn_diagram", "venn_down")
-dir.create(venn_up_dir, showWarnings = FALSE, recursive = TRUE)
-dir.create(venn_down_dir, showWarnings = FALSE, recursive = TRUE)
+# Create directories only if genes exist
+venn_up_dir <- file.path(parent_dir, "venn_up")
+venn_down_dir <- file.path(parent_dir, "venn_down")
 
-# Generate Venn diagrams for upregulated genes
-for (condition in c("early", "mid", "late")) {
-  for (cluster_name in names(all_up_genes_by_condition[[condition]])) {
-    up_genes <- all_up_genes_by_condition[[condition]][[cluster_name]]
+if (any(sapply(all_up_genes_by_condition, function(x) length(unlist(x)) > 0))) 
+  dir.create(venn_up_dir, showWarnings = FALSE, recursive = TRUE)
+
+if (any(sapply(all_down_genes_by_condition, function(x) length(unlist(x)) > 0))) 
+  dir.create(venn_down_dir, showWarnings = FALSE, recursive = TRUE)
+
+# Function to generate Venn diagrams
+generate_venn <- function(gene_list, condition, type, output_dir) {
+  for (cluster_name in names(gene_list[[condition]])) {
+    genes <- gene_list[[condition]][[cluster_name]]
     
-    if (length(up_genes) > 0) {
-      # Filter out empty clusters and create Venn diagrams for each cluster's upregulated genes
-      list_up <- list(
-        early_up = all_up_genes_by_condition$early[[cluster_name]],
-        mid_up = all_up_genes_by_condition$mid[[cluster_name]],
-        late_up = all_up_genes_by_condition$late[[cluster_name]]
+    if (length(genes) > 0) {
+      list_genes <- list(
+        early = all_up_genes_by_condition$early[[cluster_name]],
+        mid = all_up_genes_by_condition$mid[[cluster_name]],
+        late = all_up_genes_by_condition$late[[cluster_name]]
       )
-      list_up <- lapply(list_up, function(x) x[!is.na(x) & x != ""])  # Filter out NA and empty values
+      list_genes <- lapply(list_genes, function(x) x[x != "" & !is.na(x)])
       
-      # Only create Venn diagram if the list is not empty
-      if (length(list_up$early_up) > 0 && length(list_up$mid_up) > 0 && length(list_up$late_up) > 0) {
-        # Create the Venn diagram plot
-        venn_up_plot <- ggvenn(list_up, fill_color = c("#0073C2FF", "#EFC000FF", "#CD534CFF"),
-                               stroke_size = 0.5, set_name_size = 4) +
-          ggtitle(paste("Upregulated Genes -", cluster_name))
+      if (all(sapply(list_genes, length) > 0)) {
+        venn_plot <- ggvenn(list_genes, 
+                            fill_color = c("#0073C2FF", "#EFC000FF", "#CD534CFF"),
+                            stroke_size = 0.6, 
+                            set_name_size = 6) +
+          ggtitle(paste(type, "genes in", cluster_name))+
+          theme(plot.title = element_text(size = 20,  face = "bold", hjust = 0.6))  
         
-        # Save the Venn diagram plot
-        venn_up_file <- file.path(venn_up_dir, paste0(cluster_name, "_venn_up.pdf"))
-        dir.create(dirname(venn_up_file), showWarnings = FALSE)
-        
-        # Save the plot as a PDF
-        ggsave(venn_up_file, plot = venn_up_plot)
+        venn_file <- file.path(output_dir, paste0(cluster_name, "_venn_", type, ".pdf"))
+        ggsave(venn_file, plot = venn_plot,  width = 8, height = 8, units = "in")
       }
     }
   }
 }
 
-# Generate Venn diagrams for downregulated genes
-for (condition in c("early", "mid", "late")) {
-  for (cluster_name in names(all_down_genes_by_condition[[condition]])) {
-    down_genes <- all_down_genes_by_condition[[condition]][[cluster_name]]
-    
-    if (length(down_genes) > 0) {
-      # Filter out empty clusters and create Venn diagrams for each cluster's downregulated genes
-      list_down <- list(
-        early_down = all_down_genes_by_condition$early[[cluster_name]],
-        mid_down = all_down_genes_by_condition$mid[[cluster_name]],
-        late_down = all_down_genes_by_condition$late[[cluster_name]]
-      )
-      list_down <- lapply(list_down, function(x) x[!is.na(x) & x != ""])  # Filter out NA and empty values
-      
-      # Only create Venn diagram if the list is not empty
-      if (length(list_down$early_down) > 0 && length(list_down$mid_down) > 0 && length(list_down$late_down) > 0) {
-        # Create the Venn diagram plot
-        venn_down_plot <- ggvenn(list_down, fill_color = c("#0073C2FF", "#EFC000FF", "#CD534CFF"),
-                                 stroke_size = 0.5, set_name_size = 4) +
-          ggtitle(paste("Downregulated Genes -", cluster_name))
-        
-        # Save the Venn diagram plot
-        venn_down_file <- file.path(venn_down_dir, paste0(cluster_name, "_venn_down.pdf"))
-        dir.create(dirname(venn_down_file), showWarnings = FALSE)
-        
-        # Save the plot as a PDF
-        ggsave(venn_down_file, plot = venn_down_plot)
-      }
-    }
-  }
-}
-
-
-# manually test one if need be
-cluster_name <- "cluster1"  # Replace with your specific cluster if needed
-
-# Get upregulated genes for 'cluster_1' across all conditions
-list_up <- list(
-  early_up = all_up_genes_by_condition$early[[cluster_name]],
-  mid_up = all_up_genes_by_condition$mid[[cluster_name]],
-  late_up = all_up_genes_by_condition$late[[cluster_name]]
-)
-
-list_up
-
-dev.off()
-dev.off()
-
-ggvenn(list_up, fill_color = c("#0073C2FF", "#EFC000FF", "#CD534CFF"),
-       stroke_size = 0.5, set_name_size = 4) +
-  ggtitle(paste("Upregulated Genes -", cluster_name))
+# Generate Venn diagrams
+lapply(c("early", "mid", "late"), function(cond) generate_venn(all_up_genes_by_condition, cond, "up", venn_up_dir))
+lapply(c("early", "mid", "late"), function(cond) generate_venn(all_down_genes_by_condition, cond, "down", venn_down_dir))
