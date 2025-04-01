@@ -127,7 +127,7 @@ perform_comparison <- function(condition) {
           file_name <- paste0(tissue_name, "_control_vs_", condition, "_de_genes_", suffix, ".pdf")
           pdf(file.path(comparison_dir, file_name))
           
-          plot_title <- paste0(tissue_name, "_control_vs_", condition, " : top 10 markers")
+          plot_title <- paste0("Top 10 markers: ", tissue_name, " (control vs ", condition, ")")
           
           if (plot_type == "VlnPlot") {
             print(VlnPlot(seu_obj_clean, features = valid_genes_in_seurat[1:min(10, length(valid_genes_in_seurat))], 
@@ -160,7 +160,7 @@ perform_comparison <- function(condition) {
     heatmap_plot <- dittoHeatmap(cluster_aggregate_exp, genes = cluster_control_target$gene,
                                  annot.by = "condition_new",
                                  heatmap.colors = colorRampPalette(c("blue", "white", "red"))(50),
-                                 main = paste(tissue_name, "control vs", condition, "DE genes"),
+                                 main = paste0( "DE genes: ", tissue_name, " (control vs ", condition, ")"),
                                  cluster_cols = TRUE, cluster_rows = TRUE, scale = "row", show_colnames = TRUE)
     
     heatmap_file <- paste0(tissue_name, "_control_vs_", condition, "_de_genes_heatmap.pdf")
