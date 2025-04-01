@@ -1,9 +1,70 @@
-# Load required libraries
+# load packages
 library(Seurat)
-library(dplyr)
-library(tidyr)
-library(ggplot2)
+library(tidyverse)
+library(Matrix)
+library(harmony)
+library(scCustomize)
 library(dittoSeq)
+
+##### step 1: load Seurat object & prepare columns for group comparison #######
+
+# Set the working directory
+setwd("/home/pooran/Documents/parse_2025/seurat_2025/")
+
+# load Seurat object with pca, harmony, umap done beforehand!
+seu_obj <- read_rds("seu_obj_umap_18d_6r_3kRes.rds")
+seu_obj 
+
+new.cluster.ids <- c("cluster0", "cluster1", "gill_ciliary",
+                                          "hepatopancreas", "gill_nec", "gill_type1",
+                                          "hyalinocytes", "haemocytes_type1",
+                                          "cluster8", "cluster9", "mantle_vesicular",
+                                          "immature_haemocytes", "macrophage_like",
+                                          "adductor_muscle", "mantle", "digestive_gland",
+                                          "gill_type2", "small_granules_cells")
+
+names(new.cluster.ids) <- levels(seu_obj)
+
+seu_obj <- RenameIdents(seu_obj, new.cluster.ids) # add cluster info to Idents
+
+#add the annotations to metadata column
+#seu_obj$seurat_annotations <- Idents(seu_obj)
+
+
+#add new condition column to metadata for grouping
+#24-hpiA shows bad qPCR for viral dna, so putting "unsure" there
+seu_obj$condition_new <- case_when(
+  seu_obj$sample %in% c("Homogenate", "Uninfected") ~ "control",
+  seu_obj$sample %in% c("6-hpiA", "6-hpiD") ~ "early",
+  seu_obj$sample %in% "24-hpiA" ~ "mid?",
+  seu_obj$sample %in% "24-hpiJ" ~ "mid",
+  seu_obj$sample %in% c("72-hpiJ", "96-hpiE") ~ "late",
+  TRUE ~ "unknown"  # Optional: Handles unexpected values
+)
+
+unique(seu_obj$condition_new)
+
+# reorder levels in the condition_new
+seu_obj$condition_new <- factor(seu_obj$condition_new, 
+                                levels = c("control", "early", "mid?", "mid", "late"))
+
+
+# subset the Seurat object to exclude 'mid?' , i.e. 24hA
+seu_obj_clean <- subset(seu_obj, subset = condition_new != "mid?")
+
+rm(seu_obj)
+
+# drop unused levels
+seu_obj_clean$condition_new <- droplevels(seu_obj_clean$condition_new)
+
+# create a column in meta data to hold cluster info & condition
+# we will use info from this column to compare groups
+seu_obj_clean$sample_subtypes <- paste(Idents(seu_obj_clean), seu_obj_clean$condition_new, sep = "_")
+Idents(seu_obj_clean) <- "sample_subtypes" # seurat object now has new Idents = old idents + condition_new
+unique(seu_obj_clean$sample_subtypes)
+
+
+################# step 2: find pairwise DE genes across conditions & plot ######
 
 # Create a parent directory to store all results
 parent_dir <- "de_plots"
@@ -123,3 +184,6 @@ perform_comparison <- function(condition) {
 # Run function for different comparisons
 comparison_conditions <- c("late", "mid", "early")
 lapply(comparison_conditions, perform_comparison)
+
+####################### ends #################################################
+
