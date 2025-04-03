@@ -205,13 +205,14 @@ perform_comparison <- function(condition) {
           cat("Plotting", length(valid_genes_in_seurat), plot_type, "genes for", tissue_name, "(control vs", condition, ")...\n")
           
           file_name <- paste0(tissue_name, "_control_vs_", condition, "_de_genes_", suffix, ".pdf")
-          pdf(file.path(comparison_dir, file_name))
+          #pdf(file.path(comparison_dir, file_name))
+          pdf(file.path(comparison_dir, file_name), width = 12, height = 10)  # **Increased figure size**
           
           plot_title <- paste0("Top 10 markers: ", tissue_name, " (control vs ", condition, ")")
           
           if (plot_type == "VlnPlot") {
             print(VlnPlot(seu_obj_clean, features = valid_genes_in_seurat[1:min(10, length(valid_genes_in_seurat))], 
-                          stack = TRUE, flip = TRUE, group.by = "condition_new") + ggtitle(plot_title))
+                          stack = TRUE, flip = TRUE, group.by = "condition_new") + ggtitle(plot_title) + NoLegend()) 
           } else {
             print(DotPlot(seu_obj_clean, features = rev(valid_genes_in_seurat[1:min(10, length(valid_genes_in_seurat))]), 
                           group.by = "condition_new") +
@@ -246,8 +247,9 @@ perform_comparison <- function(condition) {
     
     heatmap_file <- paste0(tissue_name, "_control_vs_", condition, "_de_genes_heatmap.pdf")
     
+    pdf(file.path(comparison_dir, heatmap_file), width = 12, height = 10)  # **Increased figure size**
     
-    pdf(file.path(comparison_dir, heatmap_file))
+    #pdf(file.path(comparison_dir, heatmap_file))
     
     print(heatmap_plot)
     
