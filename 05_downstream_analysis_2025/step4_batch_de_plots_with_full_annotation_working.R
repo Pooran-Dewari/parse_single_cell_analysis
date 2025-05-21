@@ -18,12 +18,12 @@ seu_obj <- read_rds("seu_obj_umap_18d_6r_3kRes.rds")
 seu_obj 
 
 new.cluster.ids <- c("cluster0", "cluster1", "gill_ciliary",
-                                          "hepatopancreas", "gill_nec", "gill_type1",
-                                          "hyalinocytes", "haemocytes_type1",
-                                          "cluster8", "cluster9", "mantle_vesicular",
-                                          "immature_haemocytes", "macrophage_like",
-                                          "adductor_muscle", "mantle", "digestive_gland",
-                                          "gill_type2", "small_granules_cells")
+                     "hepatopancreas", "gill_nec", "gill_type1",
+                     "hyalinocytes", "haemocytes_type1",
+                     "cluster8", "cluster9", "mantle_vesicular",
+                     "immature_haemocytes", "macrophage_like",
+                     "adductor_muscle", "mantle", "digestive_gland",
+                     "gill_type2", "small_granules_cells")
 
 names(new.cluster.ids) <- levels(seu_obj)
 
@@ -99,9 +99,9 @@ gene_map2 <- merged_df %>%
 
 
 # duplicates are a PAIN and will generate error below
- #Error in .which_data(assay, slot, object)[genes, cells.use] : 
- #subscript out of bounds
- #Called from: as.matrix(.which_data(assay, slot, object)[genes, cells.use])
+#Error in .which_data(assay, slot, object)[genes, cells.use] : 
+#subscript out of bounds
+#Called from: as.matrix(.which_data(assay, slot, object)[genes, cells.use])
 
 #Custom suffix for duplicates
 gene_map2 <- gene_map2 %>%
@@ -114,6 +114,11 @@ gene_map2 <- gene_map2 %>%
     }
   ) %>%
   ungroup()
+
+
+# add gene ID to gene symbol so that we can plot later using gene id
+gene_map2 <- gene_map2 %>%
+  mutate(gene_symbol = paste(gene_id, gene_symbol, sep = " "))
 
 # Filter the mapping to include only genes present in Seurat object
 gene_map_filtered <- gene_map2 %>% 
@@ -139,7 +144,7 @@ rownames(seu_obj_clean)
 ################# step 2: find pairwise DE genes across conditions & plot ######
 
 # Create a parent directory to store all results
-parent_dir <- "de_plots_full_ann"
+parent_dir <- "de_plots_full_ann_v8"
 dir.create(parent_dir, showWarnings = FALSE)
 
 # Define function to perform DE analysis for each condition
@@ -238,6 +243,29 @@ perform_comparison <- function(condition) {
     # Generate heatmap
     cluster_aggregate_exp <- AggregateExpression(seu_obj_clean, return.seurat = TRUE, group.by = "condition_new")
     
+    #..............save the matrix for use later.................
+    
+    # Save the aggregated expression matrix used for the heatmap
+    expr_mat <- GetAssayData(cluster_aggregate_exp, slot = "data")
+    
+    # Subset to only genes used in heatmap (those that passed DE filters)
+    expr_mat_subset <- expr_mat[cluster_control_target$gene, ]
+    
+    # Convert to data frame
+    expr_df <- as.data.frame(as.matrix(expr_mat_subset))
+    expr_df <- tibble::rownames_to_column(expr_df, var = "gene")
+    
+    # Prefix condition columns with comparison info (e.g., "gill_nec_vs_early.control")
+    comparison_label <- paste0(tissue_name, "_vs_", condition)
+    colnames(expr_df)[-1] <- paste0(comparison_label, ".", colnames(expr_df)[-1])
+    
+    # Save to TSV
+    expr_table_file <- paste0(comparison_label, "_heatmap_expr_table.tsv")
+    write_tsv(expr_df, file.path(comparison_dir, expr_table_file))
+    
+    
+    #..............save the matrix for use later.................
+    
     heatmap_plot <- dittoHeatmap(cluster_aggregate_exp, genes = cluster_control_target$gene,
                                  annot.by = "condition_new",
                                  heatmap.colors = colorRampPalette(c("blue", "white", "red"))(50),
@@ -273,3 +301,79 @@ lapply(comparison_conditions, perform_comparison)
 
 ####################### ends #################################################
 
+
+# code below will create a unified list of DE genes for each cluster by combining...
+# DE genes from early, mid, and late; and create a single heatmap
+
+# Ensure necessary directories exist
+unified_dir <- file.path(parent_dir, "unified_gene_lists")
+dir.create(unified_dir, showWarnings = FALSE)
+
+heatmap_dir <- file.path(unified_dir, "heatmap_plots")
+dir.create(heatmap_dir, showWarnings = FALSE)
+
+# Generate aggregated expression data once
+cluster_aggregate_exp <- AggregateExpression(seu_obj_clean, return.seurat = TRUE, group.by = "condition_new")
+expr_mat <- GetAssayData(cluster_aggregate_exp, slot = "data")
+
+# Update condition_new with alphabetical prefixes
+seu_obj_clean$condition_new <- factor(
+  paste0(
+    c("A-", "B-", "C-", "D-")[match(seu_obj_clean$condition_new, c("control", "early", "mid", "late"))],
+    seu_obj_clean$condition_new
+  ),
+  levels = c("A-control", "B-early", "C-mid", "D-late")
+)
+
+
+# Loop through each cluster
+processed_clusters <- unique(sub("_vs_.*", "", names(cluster_gene_list)))
+
+for (base_name in processed_clusters) {
+  # Remove '_control' suffix if present
+  base_name_clean <- sub("_control$", "", base_name)
+  
+  combined_genes <- character()
+  
+  for (condition in c("early", "mid", "late")) {
+    full_cluster_name <- paste(base_name, condition, sep = "_vs_")
+    if (full_cluster_name %in% names(cluster_gene_list)) {
+      combined_genes <- unique(c(combined_genes, cluster_gene_list[[full_cluster_name]]))
+    }
+  }
+  
+  # Save unified gene list
+  write.table(combined_genes,
+              file = file.path(unified_dir, paste0(base_name_clean, "_unified_genes.txt")),
+              row.names = FALSE, col.names = FALSE, quote = FALSE)
+  
+  # Filter for genes that exist in expression data
+  valid_genes <- combined_genes[combined_genes %in% rownames(expr_mat)]
+  if (length(valid_genes) == 0) {
+    warning(paste("No valid genes found in expression matrix for:", base_name_clean))
+    next
+  }
+  
+  
+  
+  # Generate heatmap
+  heatmap_plot <- dittoHeatmap(
+    object = cluster_aggregate_exp,
+    genes = valid_genes,
+    annot.by = "condition_new",
+    order.by = "condition_new",
+    heatmap.colors = colorRampPalette(c("blue", "white", "red"))(50),
+    main = paste0("Unified DE genes heatmap: ", base_name_clean, " (", length(valid_genes), " genes)"),
+    cluster_cols = FALSE,
+    cluster_rows = TRUE,
+    scale = "row",
+    show_colnames = TRUE
+  )
+  
+  
+  # Save heatmap to PDF
+  heatmap_file <- paste0(base_name_clean, "_unified_genes_heatmap.pdf")
+  pdf(file.path(heatmap_dir, heatmap_file), width = 12, height = 10)
+  print(heatmap_plot)
+  dev.off()
+}
