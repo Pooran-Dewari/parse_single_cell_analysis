@@ -14,7 +14,8 @@ library(Seurat.utils)
 ##### step 1: load Seurat object & prepare columns for group comparison #######
 
 # Set the working directory
-setwd("/home/pooran/Documents/parse_2025/seurat_2025/")
+#setwd("/home/pooran/Documents/parse_2025/seurat_2025/")
+setwd("/external1/Pooran_will_del_soon/parse_2025/seurat_2025/")
 
 # load Seurat object with pca, harmony, umap done beforehand!
 seu_obj <- read_rds("seu_obj_umap_18d_6r_3kRes.rds")
@@ -508,10 +509,27 @@ divonne_markers <- c("G12639", "G12733", "G22387", "G5864", "G32289",
                      "G21444", "G22986", "G384",
                      "G28618", "G1202")
 
+divonne_ann <- list(
+  `Small Granule Cells` = c("G12639", "G12733", "G22387", "G5864", "G32289"),
+  Hyalinocytes = c("G2459", "G29330", "G32588", "G2457"),
+  `Immature Haemocytes` = c("G4972", "G7023", "G1172", "G16773"),
+  `Haemocyte Type` = c("G21444", "G22986", "G384"),
+  `Mantle Vesicular Cells` = c("G28618", "G1202")
+)
+  
 # get gene symbols
+# divonne_symbols <- gene_map_filtered %>%
+#   filter(gene_id %in% divonne_markers) %>%
+#   mutate(symbol_trimmed = sub("^\\S+\\s+", "", gene_symbol))  # removes gene ID for plot
+
 divonne_symbols <- gene_map_filtered %>%
   filter(gene_id %in% divonne_markers) %>%
-  mutate(symbol_trimmed = sub("^\\S+\\s+", "", gene_symbol))  # removes gene ID for plot
+  mutate(
+    symbol_trimmed = sub("^\\S+\\s+", "", gene_symbol),
+    gene_id = factor(gene_id, levels = divonne_markers)  # enforce order
+  ) %>%
+  arrange(gene_id)  # sort by the order in divonne_markers
+
 
 # custom ggplot theme
 theme_pub <- theme_classic(base_size = 14) +
@@ -528,7 +546,7 @@ theme_pub <- theme_classic(base_size = 14) +
   )
 
 # Create the dot plot
-divonne <- DotPlot(seu_obj_clean, features = divonne_symbols$gene_symbol, cols = c("gray80", "firebrick3"), dot.scale = 6) +
+divonne_dot <- DotPlot(seu_obj_clean, features = divonne_symbols$gene_symbol, cols = c("gray80", "firebrick3"), dot.scale = 6) +
   theme_pub +
   scale_x_discrete(labels = divonne_symbols$symbol_trimmed) +
   theme(
@@ -537,9 +555,10 @@ divonne <- DotPlot(seu_obj_clean, features = divonne_symbols$gene_symbol, cols =
     panel.grid.major.y = element_blank(),
     panel.grid.minor = element_blank()
   ) +
-  labs(x = NULL, y = NULL, color = "Avg. Expression", size = "Pct. Expressed")
+  labs(x = NULL, y = NULL, color = "Avg. Expression", size = "Pct. Expressed")+
+  coord_flip()
 
-ggsave("Figure 2A dotplot.pdf", plot = divonne, width = 10, height = 12, units = "in", dpi = 600)
+ggsave("/external1/Pooran_will_del_soon/parse_2025/seurat_2025/figures/main/Figure 2A dotplot.pdf", plot = divonne_dot, width = 12, height = 12, units = "in", dpi = 600)
 
 #figure 2B
 # Prepare gene list
@@ -547,17 +566,19 @@ features <- divonne_symbols$gene_symbol
 names(features) <- divonne_symbols$symbol_trimmed
 
 # Create stacked violin plot
-stacked_vln <- VlnPlot(
+divonne_stackedvln <- VlnPlot(
   seu_obj_clean,
-  features = features,
+  features = rev(features),
   stack = TRUE,
   flip = TRUE,
   pt.size = 0
 ) +
   NoLegend()
 
-ggsave("Figure2B_stacked_violin.pdf", plot = stacked_vln, width = 10, height = 12, dpi = 600)
+ggsave("/external1/Pooran_will_del_soon/parse_2025/seurat_2025/figures/main/Figure2B_stacked_violin.pdf", 
+       plot = divonne_stackedvln, width = 12, height = 12, dpi = 600)
 
+#divonne_stackedvln + divonne_dot
 #...........
 ############# Figure 2 ends   #######################***************************
 #
