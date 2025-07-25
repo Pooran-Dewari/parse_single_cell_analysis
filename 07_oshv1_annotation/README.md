@@ -21,3 +21,4 @@ bedtools getfasta -fi viv46-2-m_assembly_NR_2017.fasta -bed exon.bed -fo exon_se
 ```
 grep 'ORF110' exon_sequences.fasta -A 1
 ```
+4) Run eggnog http://eggnog-mapper.embl.de/
