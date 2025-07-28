@@ -1,15 +1,15 @@
-query	Description_dna_eggNOG	Description_protein_eggNOG
-ORF20	Ribonucleotide reductase, small chain	Ribonucleotide reductase, small chain
-ORF42	Inhibitor of Apoptosis domain	Inhibitor of Apoptosis domain
-ORF44	Deoxynucleoside kinase	Deoxynucleoside kinase
-ORF51	Ribonucleotide reductase, barrel domain	Ribonucleotide reductase, barrel domain
-ORF57	Mid-1-related chloride channel (MCLC)	Mid-1-related chloride channel (MCLC)
-ORF64	ligase activity	ligase activity
-ORF66	DNA primase activity	DNA primase activity
-ORF67	N-methyltransferase activity	N-methyltransferase activity
-ORF87	Inhibitor of Apoptosis domain	Inhibitor of Apoptosis domain
-ORF99	Inhibitor of Apoptosis domain	Inhibitor of Apoptosis domain
-ORF100	3'-5' exonuclease activity	3'-5' exonuclease activity
-ORF106	Inhibitor of Apoptosis domain	Inhibitor of Apoptosis domain
-ORF109	Probable DNA packing protein, C-terminus	Probable DNA packing protein, C-terminus
-ORFS115	DNA replication origin binding	NA
+query	Description_dna_eggNOG	Description_protein_eggNOG	
+ORF20	Ribonucleotide reductase, small chain	Ribonucleotide reductase, small chain	
+ORF42	Inhibitor of Apoptosis domain	Inhibitor of Apoptosis domain	All cells have the same value of ORF42 = 0
+ORF44	Deoxynucleoside kinase	Deoxynucleoside kinase	
+ORF51	Ribonucleotide reductase, barrel domain	Ribonucleotide reductase, barrel domain	
+ORF57	Mid-1-related chloride channel (MCLC)	Mid-1-related chloride channel (MCLC)	
+ORF64	ligase activity	ligase activity	All cells have the same value of ORF64.
+ORF66	DNA primase activity	DNA primase activity	
+ORF67	N-methyltransferase activity	N-methyltransferase activity	All cells have the same value of ORF67.
+ORF87	Inhibitor of Apoptosis domain	Inhibitor of Apoptosis domain	All cells have the same value of ORF87.
+ORF99	Inhibitor of Apoptosis domain	Inhibitor of Apoptosis domain	All cells have the same value of ORF99.
+ORF100	3'-5' exonuclease activity	3'-5' exonuclease activity	
+ORF106	Inhibitor of Apoptosis domain	Inhibitor of Apoptosis domain	
+ORF109	Probable DNA packing protein, C-terminus	Probable DNA packing protein, C-terminus	All cells have the same value of ORF109.
+ORFS115	DNA replication origin binding	NA	All cells have the same value of ORFS115
