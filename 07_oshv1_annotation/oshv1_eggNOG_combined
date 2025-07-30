@@ -1,15 +1,60 @@
-query	Description_dna_eggNOG	Description_protein_eggNOG	
-ORF20	Ribonucleotide reductase, small chain	Ribonucleotide reductase, small chain	
-ORF42	Inhibitor of Apoptosis domain	Inhibitor of Apoptosis domain	All cells have the same value of ORF42 = 0
-ORF44	Deoxynucleoside kinase	Deoxynucleoside kinase	
-ORF51	Ribonucleotide reductase, barrel domain	Ribonucleotide reductase, barrel domain	
-ORF57	Mid-1-related chloride channel (MCLC)	Mid-1-related chloride channel (MCLC)	
-ORF64	ligase activity	ligase activity	All cells have the same value of ORF64.
-ORF66	DNA primase activity	DNA primase activity	
-ORF67	N-methyltransferase activity	N-methyltransferase activity	All cells have the same value of ORF67.
-ORF87	Inhibitor of Apoptosis domain	Inhibitor of Apoptosis domain	All cells have the same value of ORF87.
-ORF99	Inhibitor of Apoptosis domain	Inhibitor of Apoptosis domain	All cells have the same value of ORF99.
-ORF100	3'-5' exonuclease activity	3'-5' exonuclease activity	
-ORF106	Inhibitor of Apoptosis domain	Inhibitor of Apoptosis domain	
-ORF109	Probable DNA packing protein, C-terminus	Probable DNA packing protein, C-terminus	All cells have the same value of ORF109.
-ORFS115	DNA replication origin binding	NA	All cells have the same value of ORFS115
+query	Description_dna_eggNOG	Description_protein_eggNOG		
+ORF20	Ribonucleotide reductase, small chain	Ribonucleotide reductase, small chain		
+ORF42	Inhibitor of Apoptosis domain	Inhibitor of Apoptosis domain	All cells have the same value of ORF42 = 0	
+ORF44	Deoxynucleoside kinase	Deoxynucleoside kinase		
+ORF51	Ribonucleotide reductase, barrel domain	Ribonucleotide reductase, barrel domain		
+ORF57	Mid-1-related chloride channel (MCLC)	Mid-1-related chloride channel (MCLC)		
+ORF64	ligase activity	ligase activity	All cells have the same value of ORF64.	
+ORF66	DNA primase activity	DNA primase activity		
+ORF67	N-methyltransferase activity	N-methyltransferase activity	All cells have the same value of ORF67.	
+ORF87	Inhibitor of Apoptosis domain	Inhibitor of Apoptosis domain	All cells have the same value of ORF87.	
+ORF99	Inhibitor of Apoptosis domain	Inhibitor of Apoptosis domain	All cells have the same value of ORF99.	
+ORF100	3'-5' exonuclease activity	3'-5' exonuclease activity		
+ORF106	Inhibitor of Apoptosis domain	Inhibitor of Apoptosis domain		
+ORF109	Probable DNA packing protein, C-terminus	Probable DNA packing protein, C-terminus	All cells have the same value of ORF109.	
+ORFS115	DNA replication origin binding	NA	All cells have the same value of ORFS115	
+				
+				
+ORF122		ATP-dependent RNA helicase DBP3 OS=Scheffersomyces stipitis (strain ATCC 58785 / CBS 6054 / NBRC 10063 / NRRL Y-11545) OX=322104 GN=DBP3 PE=3 SV=1	Using PSI-BLAST of protein sequence	
+ORF53		Titin OS=Tetragonisca angustula OX=166442 GN=QLX08_000385 PE=3 SV=1	Using PSI-BLAST of protein sequence	
+ORF28		dUTPase-like domain-containing protein OS=Capitella teleta OX=283909 GN=CAPTEDRAFT_187501 PE=4 SV=1	Using PSI-BLAST of protein sequence	This protein contains a dUTPase-like domain, suggesting it might be involved in similar functions as dUTPases found in other viruses, such as Herpes Simplex Virus 1 (HSV-1), which are known to play a role in viral replication and potentially in modulating the host's immune response. 
+ORF1		Formate--tetrahydrofolate ligase OS=Heliobacterium modesticaldum (strain ATCC 51547 / Ice1) OX=498761 GN=fhs PE=3 SV=1	Using PSI-BLAST of protein sequence	Purine metabolism
+ORF2		Cyclin-dependent kinase 11.1 OS=Caenorhabditis elegans OX=6239 GN=cdk-11.1 PE=1 SV=1	Using PSI-BLAST of protein sequence	
+ORF4		DNA polymerase I conserved domain protein (Fragment) OS=Ostreid herpesvirus 1 OX=261939 PE=4 SV=1	Using PSI-BLAST of protein sequence	
+ORF112		Probable DNA polymerase sliding clamp OS=Acanthamoeba polyphaga mimivirus OX=212035 GN=PCNA PE=3 SV=2	Using PSI-BLAST of protein sequence	
+				
+ORF102		Serine/threonine-protein kinase MRCK beta OS=Homo sapiens OX=9606 GN=CDC42BPB PE=1 SV=2	Using PSI-BLAST of protein sequence	
+ORF98		no significant hits	Using PSI-BLAST of protein sequence	
+ORF97		E3 ubiquitin-protein ligase XIAP 	Using PSI-BLAST of protein sequence	
+ORF88		Mucin-2 OS=Homo sapiens OX=9606 GN=MUC2 PE=1 SV=3	Using PSI-BLAST of protein sequence	Taken together, our data suggest that the mucin-like region of HSV-1 gC is involved in the modulation of the GAG-binding activity, a feature of importance both for unrestricted virus entry into the cells and release of newly produced viral particles from infected cells.
+ORF85		no significant hits	Using PSI-BLAST of protein sequence	
+ORF84		no significant hits	Using PSI-BLAST of protein sequence	
+ORF77		no significant hits	Using PSI-BLAST of protein sequence	
+				
+ORF56		Splicing factor U2af large subunit B OS=Nicotiana plumbaginifolia OX=4092 GN=U2AF65B PE=2 SV=1	Using PSI-BLAST of protein sequence	
+ORF49		Putative primase OS=Ostreid herpesvirus 1 (isolate France) OX=654903 GN=ORF7 PE=3 SV=1	Using PSI-BLAST of protein sequence	
+ORF41		no significant hits	Using PSI-BLAST of protein sequence	
+ORF27		Deoxyuridine 5'-triphosphate nucleotidohydrolase OS=Candida albicans (strain WO-1) OX=294748 GN=DUT1 PE=3 SV=1	Using PSI-BLAST of protein sequence	Involved in nucleotide metabolism via production of dUMP, the immediate precursor of thymidine nucleotides, and decreases the intracellular concentration of dUTP so that uracil cannot be incorporated into DNA.a
+ORF26		Probable serine/threonine-protein kinase kinX OS=Dictyostelium discoideum OX=44689 GN=kinX PE=3 SV=2	Using PSI-BLAST of protein sequence	
+ORF23		Putative autophagy-related protein 11 OS=Plasmodium falciparum (isolate 3D7) OX=36329 GN=ATG11 PE=1 SV=1	Using PSI-BLAST of protein sequence	
+ORF11		GRB10-interacting GYF protein 2 OS=Xenopus laevis OX=8355 GN=gigyf2 PE=2 SV=1	Using PSI-BLAST of protein sequence	
+ORF22		no significant hits	Using PSI-BLAST of protein sequence	
+ORF119		no significant hits	Using PSI-BLAST of protein sequence	
+ORF107		Protein LANA1 OS=Human herpesvirus 8 type P (isolate GK18) OX=868565 GN=LANA1 PE=1 SV=1	Using PSI-BLAST of protein sequence	
+				
+ORF104		no significant hits	Using PSI-BLAST of protein sequence	
+ORF80		no significant hits	Using PSI-BLAST of protein sequence	
+ORF78		no significant hits	Using PSI-BLAST of protein sequence	
+ORF76		DNA-directed RNA polymerase subunit beta' OS=Chlamydia felis (strain Fe/C-56) OX=264202 GN=rpoC PE=3 SV=1	Using PSI-BLAST of protein sequence	
+ORF6		DNA ligase 1 OS=Dictyostelium discoideum OX=44689 GN=lig1 PE=3 SV=1	Using PSI-BLAST of protein sequence	
+ORF47		no significant hits	Using PSI-BLAST of protein sequence	
+ORF124		no significant hits	Using PSI-BLAST of protein sequence	
+ORF10		no significant hits	Using PSI-BLAST of protein sequence	
+				
+ORF29		Chromatin assembly factor 1 subunit A OS=Danio rerio OX=7955 GN=chaf1a PE=1 SV=1	Using PSI-BLAST of protein sequence	
+ORF113		no significant hits	Using PSI-BLAST of protein sequence	
+ORF116		no significant hits	Using PSI-BLAST of protein sequence	
+ORF110		no significant hits	Using PSI-BLAST of protein sequence	
+ORF117		Putative RING finger protein ORF117 OS=Ostreid herpesvirus 1 (isolate France) OX=654903 GN=ORF117 PE=4 SV=1	Using PSI-BLAST of protein sequence	
+ORF90		AdoMet-dependent rRNA methyltransferase SPB1 OS=Eremothecium gossypii (strain ATCC 10895 / CBS 109.51 / FGSC 9923 / NRRL Y-1056) OX=284811 GN=SPB1 PE=3 SV=2	Using PSI-BLAST of protein sequence	
+ORF108		Origin recognition complex subunit 1 OS=Saccharomyces cerevisiae (strain ATCC 204508 / S288c) OX=559292 GN=ORC1 PE=1 SV=1	Using PSI-BLAST of protein sequence	
