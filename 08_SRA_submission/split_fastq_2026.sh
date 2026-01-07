@@ -1,7 +1,12 @@
 # use this bash scirpt to split each sub-library by oyster and shrimp species
-# requires about 20G memory, use <qlogin -q staging> ; also requires pandas and numpy, use <module load roslin/python/3.8.10>
+# requires about 20G memory, use <qlogin -l h_vmem=20G> ; also requires pandas and numpy, use <module load roslin/python/3.8.10>
 # download the <fastq_sep_groups_new2024.py> script
 
+
+
+# qlogin -l h_vmem=20G
+# module load roslin/python/3.8.10
+# cd /exports/eddie/scratch/pdewari/concat
 
 SCRIPTPATH="/exports/eddie/scratch/pdewari/concat/fastq_sep_groups_new2024.py" 
 
