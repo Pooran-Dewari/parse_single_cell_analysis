@@ -5,8 +5,11 @@
 
 
 # qlogin -l h_vmem=20G
-# module load roslin/python/3.8.10
-# cd /exports/eddie/scratch/pdewari/concat
+
+
+module load roslin/python/3.8.10
+
+cd /exports/eddie/scratch/pdewari/concat
 
 SCRIPTPATH="/exports/eddie/scratch/pdewari/concat/fastq_sep_groups_new2024.py" 
 
